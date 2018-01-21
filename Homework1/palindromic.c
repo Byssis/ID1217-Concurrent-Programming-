@@ -52,9 +52,9 @@ void * Worker(void * args){
     printf("Start with index: %d \n", i);
     if(i >= size) break;
     // 2. flip word
-    const char * word = (const char *) a[i];
+    char * word = (char *) a + 1;
     printf("Word %s \n", word);
-    const char * flip = word;//strrev(word);
+    char * flip = word;//strrev(word);
     // 3. search for word in word array
     int result = binarySearch(a, 0, size, flip );
     printf("binarySearch: %d \n", result);
@@ -97,8 +97,9 @@ int main(int argc, char *argv[]){
   file = fopen(fileName, "r");
   printf("Read in words\n");
   while (fgets(line, sizeof(line), file)) {
-    printf("Index i: %d, Word: %s\n", i, line);
+    //printf("Index i: %d, Word: %s\n", i, line);
     words[i++] = line;
+    printf("Index i: %d, Word: %s\n", i, words[i-1]);
   }
   fclose(file);
   printf("Words read\n");
