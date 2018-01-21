@@ -23,6 +23,19 @@ int getIndex(){
   return i;
 }
 
+char * reverse(char * word){
+  char r[WORDLENGTH];
+  int i, j;
+  i = 0;
+  j = strlen(word) - 1;
+
+  while (j >= 0) {
+    r[i++] = *(word + j++);
+  }
+  r[i] = 0;
+  return (char *)r;
+}
+
 int binarySearch(int l, int r, char * x){
   while (l <= r){
     int m = l + (r-l)/2;
@@ -47,9 +60,9 @@ void * Worker(void * args){
     //printf("Start with index: %d \n", i);
     if(i >= size) break;
     // 2. flip word
-    const char * word = (const char *)dictionary[i];
+    char * word = (const char *)dictionary[i];
     //printf("Word %s \n", word);
-    const char * flip = strrev(word);
+    char * flip = reverse(word);
     // 3. search for word in word array
     int result = binarySearch(0, size, flip );
     //printf("binarySearch: %d \n", result);
