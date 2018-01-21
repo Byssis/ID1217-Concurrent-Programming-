@@ -60,8 +60,8 @@ void * Worker(void * args){
     if(i >= size) break;
     // 2. flip word
     char * word = dictionary[i];
-    //printf("Word %s \n", word);
     char * flip = reverse(word);
+    printf("Word %s %s \n", word, flip);
     // 3. search for word in word array
     int result = binarySearch(0, size, flip );
     //printf("binarySearch: %d \n", result);
