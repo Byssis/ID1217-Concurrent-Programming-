@@ -99,7 +99,6 @@ int main(int argc, char *argv[]){
   size = k + 1;
   //printf("Size %d\n", size);
   fclose(file);
-  printf("%s\n", reverse(dictionary[0]) );
   //printf("Words read\n");
   int numWorkers =  MAXWORKERS;
   pthread_t workerid[numWorkers];
