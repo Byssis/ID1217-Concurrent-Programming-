@@ -83,7 +83,7 @@ int main(int argc, char *argv[]){
   while (fgets(line, sizeof(line), file)) {
     size++;
   }
-  printf("Size %d\n", args.size);
+  printf("Size %d\n", size);
   fclose(file);
   int i;
   char * words [size];
