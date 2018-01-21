@@ -76,8 +76,8 @@ int main(int argc, char *argv[]){
     exit(0);
   }
 
-  char const* const fileName = argv[2];
-  printf("WTF!!!\n");
+  char const* const fileName = argv[1];
+  printf("%s %s\n", argv[1], argv[2]);
   FILE* file = fopen(fileName, "r");
   for (k = 0; k < MAXSIZE; k++) {
     printf("%d\n", k);
