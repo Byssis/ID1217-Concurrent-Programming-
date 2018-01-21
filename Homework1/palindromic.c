@@ -70,8 +70,9 @@ void * Worker(void * args){
 int main(int argc, char *argv[]){
   double start_time, end_time;
   int k, l, size;
+  printf("Palindromic\n");
   if(argc < 1){
-    printf("Argument missing: file to examine\n");
+    printf("Error! Argument missing: file to examine\n");
     exit(0);
   }
 
