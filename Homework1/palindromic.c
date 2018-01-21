@@ -80,6 +80,7 @@ int main(int argc, char *argv[]){
   printf("WTF!!!\n");
   FILE* file = fopen(fileName, "r");
   for (k = 0; k < MAXSIZE; k++) {
+    printf("%d\n", k);
     fscanf(file, "%s", dictionary[k]);
   }
   printf("WTF!!!\n");
