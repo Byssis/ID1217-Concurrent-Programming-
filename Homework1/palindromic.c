@@ -95,7 +95,7 @@ int main(int argc, char *argv[]){
   int size = 0;
   int k;
   for (k = 0; k < MAXSIZE; k++) {
-    fscanf(file, "%s", dictionary[i]);    
+    fscanf(file, "%s", dictionary[k]);    
   }
   size = k + 1;
   printf("Size %d\n", size);
