@@ -70,13 +70,13 @@ void * Worker(void * args){
 int main(int argc, char *argv[]){
   double start_time, end_time;
   int k, l, size;
-  printf("Palindromic %d\n", argc);
-  if(argc < 1){
+  printf("Palindromic words: \n");
+  if(argc < 2){
     printf("Error! Argument missing: file to examine\n");
     exit(0);
   }
 
-  char const* const fileName = argv[1];
+  char const* const fileName = argv[2];
   printf("WTF!!!\n");
   FILE* file = fopen(fileName, "r");
   for (k = 0; k < MAXSIZE; k++) {
