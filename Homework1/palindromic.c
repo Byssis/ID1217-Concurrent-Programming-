@@ -6,16 +6,14 @@
 #include <string.h>
 #include <sys/time.h>
 
-#define MAXWORKERS 1
-#define WORDLENGTH 4
+#define MAXWORKERS 4
+#define WORDLENGTH 40
+#define MAXSIZE 30000
 pthread_mutex_t word_index_lock;
 
-typedef struct node {
-char* array;
-int size;
-} thread_args;
-
 int word_index = 0;
+
+char dictionary[MAXSIZE][WORDLENGTH];
 
 int getIndex(){
   int i;
@@ -25,10 +23,10 @@ int getIndex(){
   return i;
 }
 
-int binarySearch(char * arr, int l, int r, char * x){
+int binarySearch(int l, int r, char * x){
   while (l <= r){
     int m = l + (r-l)/2;
-    int result = (int)strcmp(x, (arr + m));
+    int result = (int)strcmp(x, dictionary[m]);
     if (result == 0)
       return m;
     if (result > 0)
@@ -40,9 +38,8 @@ int binarySearch(char * arr, int l, int r, char * x){
 }
 
 void * Worker(void * args){
-  thread_args* arg = (thread_args*)args;
-  int size = (int)arg->size;
-  char*  a = (char *)arg->array;
+  int * size = (int *)args;
+
   printf("Start working!!!\n");
   while (true) {
     // 1. Get word from bag
@@ -50,11 +47,11 @@ void * Worker(void * args){
     printf("Start with index: %d \n", i);
     if(i >= size) break;
     // 2. flip word
-    char * word = (char *) a + i;
+    char * word = dictionary[i];
     printf("Word %s \n", word);
     char * flip = word;//strrev(word);
     // 3. search for word in word array
-    int result = binarySearch(a, 0, size, flip );
+    int result = binarySearch(0, size, flip );
     printf("binarySearch: %d \n", result);
     // 4. print if
     if(result != -1)
@@ -80,40 +77,26 @@ int main(int argc, char *argv[]){
   printf("Start\n");
   double start_time, end_time;
   char const* const fileName = argv[1];
-  char line[WORDLENGTH];
+
   FILE* file = fopen(fileName, "r");
   int size = 0;
 
-  while (fgets(line, sizeof(line), file)) {
+  while (fgets(dictionary[size], sizeof(size[size]), file)) {
     size++;
   }
   printf("Size %d\n", size);
   fclose(file);
-  int i = 0;
 
-  char * words [size];
-  file = fopen(fileName, "r");
-  printf("Read in words\n");
-  while (fgets(line, sizeof(line), file)) {
-    //printf("Index i: %d, Word: %s\n", i, line);
-    words[i++] = line;
-    printf("Index i: %d, Word: %s\n", i, words[i-1]);
-  }
-  fclose(file);
   printf("Words read\n");
   int numWorkers =  MAXWORKERS;
   pthread_t workerid[numWorkers];
 
-  thread_args args;
-
-  args.size = size;
-  args.array = (char* )words;
   int l;
-  printf("Start threads %d\n", args.size);
+  printf("Start threads\n");
   start_time = read_timer();
   for (l = 0; l < numWorkers; l++){
     printf("Start worker %d\n", l);
-    pthread_create(&workerid[l], NULL, Worker, &args);
+    pthread_create(&workerid[l], NULL, Worker, &size);
   }
 
   for (l = 0; l < numWorkers; l++)
