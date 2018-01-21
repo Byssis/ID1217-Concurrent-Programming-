@@ -28,10 +28,8 @@ void reverse(char * word, char * r){
   i = 0;
   j = strlen(word) - 1;
   while (j >= 0) {
-    r[i++] = *(word + j--);
-  //  r += ++i;
+    r[i++] = word[j];
   }
-  //r[i++] = '\n';
   r[i]  = '\0';
 }
 
@@ -51,7 +49,6 @@ int binarySearch(int l, int r, char * x){
 
 void * Worker(void * args){
   int size = *((int *)args);
-
   //printf("Start working!!!\n");
   while (true) {
     // 1. Get word from bag
@@ -87,9 +84,9 @@ double read_timer() {
 }
 
 int main(int argc, char *argv[]){
-  //printf("Start\n");
   double start_time, end_time;
   char const* const fileName = argv[1];
+  int numWorkers = (argc > 2)? atoi(argv[2]) : MAXWORKERS;
 
   FILE* file = fopen(fileName, "r");
   int size = 0;
@@ -98,24 +95,19 @@ int main(int argc, char *argv[]){
     fscanf(file, "%s", dictionary[k]);
   }
   size = k + 1;
-  //printf("Size %d\n", size);
   fclose(file);
-  //printf("Words read\n");
-  int numWorkers =  MAXWORKERS;
+
+  //int numWorkers =  MAXWORKERS;
   pthread_t workerid[numWorkers];
 
-  int l;
-  //printf("Start threads\n");
   start_time = read_timer();
-  for (l = 0; l < numWorkers; l++){
-    //printf("Start worker %d\n", l);
+  int l;
+  for (l = 0; l < numWorkers; l++)
     pthread_create(&workerid[l], NULL, Worker, &size);
-  }
 
   for (l = 0; l < numWorkers; l++){
     pthread_join(workerid[l],NULL);
   }
-
   end_time = read_timer();
 
   printf("The execution time is %g sec\n", end_time - start_time);
