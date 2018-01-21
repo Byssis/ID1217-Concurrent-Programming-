@@ -47,9 +47,9 @@ void * Worker(void * args){
     //printf("Start with index: %d \n", i);
     if(i >= size) break;
     // 2. flip word
-    char * word = dictionary[i];
+    const char * word = (const char *)dictionary[i];
     //printf("Word %s \n", word);
-    char * flip = strrev(word);
+    const char * flip = strrev(word);
     // 3. search for word in word array
     int result = binarySearch(0, size, flip );
     //printf("binarySearch: %d \n", result);
