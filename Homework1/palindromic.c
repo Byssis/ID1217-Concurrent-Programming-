@@ -29,7 +29,7 @@ int binarySearch(char * arr, int l, int r, char * x){
   printf("binarySearch: %d, %d, %s \n", l, r, x);
   while (l <= r){
     int m = l + (r-l)/2;
-    int result = strcmp(x, arr[m]);
+    int result = (int)strcmp(x, arr[m]);
     printf("strcmp: %d \n", result);
     if (result == 0)
       return m;
@@ -43,16 +43,17 @@ int binarySearch(char * arr, int l, int r, char * x){
 
 void * Worker(void * args){
   thread_args* arg = (thread_args*)args;
-  int size = arg->size;
-  char* a = arg->array;
-    printf("Start working!!!\n");
+  int size = (int)arg->size;
+  char* a = (char *)arg->array;
+  printf("Start working!!!\n");
   while (true) {
     // 1. Get word from bag
     int i = getIndex();
     printf("Start with index: %d \n", i);
     if(i >= size) break;
     // 2. flip word
-    const char * word = a[i];
+    const char * word = (const char *) a[i];
+    printf("Word %s \n", word);
     const char * flip = word;//strrev(word);
     // 3. search for word in word array
     int result = binarySearch(a, 0, size, flip );
@@ -107,7 +108,7 @@ int main(int argc, char *argv[]){
   thread_args args;
 
   args.size = size;
-  args.array = words;
+  args.array = (char *) words;
   int l;
   printf("Start threads %d\n", args.size);
   start_time = read_timer();
