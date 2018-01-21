@@ -139,8 +139,6 @@ int main(int argc, char *argv[]) {
   printf("The execution time is %g sec\n", end_time - start_time);
 }
 
-/* Each worker sums the values in one strip of the matrix.
-   After a barrier, worker(0) computes and prints the total */
 void *Worker(void *arg) {
   int i, j, wmin, wminI, wminJ, wmax, wmaxI, wmaxJ;
 
@@ -152,8 +150,6 @@ void *Worker(void *arg) {
     i = getTaskFromBag();
     if(i >= size) break;
 
-    /* sum values in my strip */
-    total = 0;
     wmin = matrix[0][0];
     wmax = matrix[0][0];
 
