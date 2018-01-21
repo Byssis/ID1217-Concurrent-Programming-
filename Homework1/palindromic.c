@@ -87,7 +87,7 @@ double read_timer() {
 }
 
 int main(int argc, char *argv[]){
-  printf("Start\n");
+  //printf("Start\n");
   double start_time, end_time;
   char const* const fileName = argv[1];
 
@@ -95,21 +95,21 @@ int main(int argc, char *argv[]){
   int size = 0;
   int k;
   for (k = 0; k < MAXSIZE; k++) {
-    fscanf(file, "%s", dictionary[k]);    
+    fscanf(file, "%s", dictionary[k]);
   }
   size = k + 1;
-  printf("Size %d\n", size);
+  //printf("Size %d\n", size);
   fclose(file);
   printf("%s\n", reverse(dictionary[0]) );
-  printf("Words read\n");
+  //printf("Words read\n");
   int numWorkers =  MAXWORKERS;
   pthread_t workerid[numWorkers];
 
   int l;
-  printf("Start threads\n");
+  //printf("Start threads\n");
   start_time = read_timer();
   for (l = 0; l < numWorkers; l++){
-    printf("Start worker %d\n", l);
+    //printf("Start worker %d\n", l);
     pthread_create(&workerid[l], NULL, Worker, &size);
   }
 
