@@ -11,7 +11,7 @@
 pthread_mutex_t word_index_lock;
 
 typedef struct node {
-char** array;
+char* array;
 int size;
 } thread_args;
 
@@ -42,7 +42,7 @@ int binarySearch(char ** arr, int l, int r, char * x){
 void * Worker(void * args){
   thread_args* arg = (thread_args*)args;
   int size = (int)arg->size;
-  char** a = (char *)arg->array;
+  char* a = (char *)arg->array;
   printf("Start working!!!\n");
   while (true) {
     // 1. Get word from bag
@@ -50,7 +50,7 @@ void * Worker(void * args){
     printf("Start with index: %d \n", i);
     if(i >= size) break;
     // 2. flip word
-    char * word = (char *) a + 1;
+    char * word = (char *) a + i;
     printf("Word %s \n", word);
     char * flip = word;//strrev(word);
     // 3. search for word in word array
