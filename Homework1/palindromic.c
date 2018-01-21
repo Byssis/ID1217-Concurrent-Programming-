@@ -26,9 +26,11 @@ int getIndex(){
 }
 
 int binarySearch(char * arr, int l, int r, char * x){
+  printf("binarySearch: %d, %d, %s \n", l, r, x);
   while (l <= r){
     int m = l + (r-l)/2;
     int result = strcmp(x, arr[m]);
+    printf("strcmp: %d \n", result);
     if (result == 0)
       return m;
     if (result > 0)
@@ -52,7 +54,6 @@ void * Worker(void * args){
     // 2. flip word
     const char * word = a[i];
     const char * flip = word;//strrev(word);
-    printf("Start with index: %d \n", i);
     // 3. search for word in word array
     int result = binarySearch(a, 0, size, flip );
     printf("binarySearch: %d \n", result);
