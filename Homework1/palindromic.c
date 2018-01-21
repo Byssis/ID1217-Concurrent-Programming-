@@ -77,22 +77,23 @@ int main(int argc, char *argv[]){
   }
 
   char const* const fileName = argv[1];
-  printf("%s %s\n", argv[1], argv[2]);
+
   FILE* file = fopen(fileName, "r");
   for (k = 0; k < MAXSIZE; k++) {
-    printf("%d\n", k);
     fscanf(file, "%s", dictionary[k]);
   }
-  printf("WTF!!!\n");
+    printf("WTF!!!\n");
   size = k + 1;
   fclose(file);
 
   int numWorkers =  MAXWORKERS;
   pthread_t workerid[numWorkers];
-
+  printf("WTF!!!\n");
   start_time = read_timer();
-  for (l = 0; l < numWorkers; l++)
+  for (l = 0; l < numWorkers; l++){
+    printf("Worker: %d\n", l);
     pthread_create(&workerid[l], NULL, Worker, &size);
+  }
 
   for (l = 0; l < numWorkers; l++){
     pthread_join(workerid[l],NULL);
