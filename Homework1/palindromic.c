@@ -82,6 +82,7 @@ int main(int argc, char *argv[]){
   for (k = 0; k < MAXSIZE; k++) {
     fscanf(file, "%s", dictionary[k]);
   }
+  printf("WTF!!!\n");
   size = k + 1;
   fclose(file);
 
