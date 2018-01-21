@@ -12,23 +12,23 @@ pthread_mutex_t word_index_lock;
 
 typedef struct node {
 char* array;
-long size;
+int size;
 } thread_args;
 
-long word_index;
+int word_index;
 
-long getIndex(){
-  long i;
+int getIndex(){
+  int i;
   pthread_mutex_lock(&word_index_lock);
   i = word_index++;
   pthread_mutex_unlock(&word_index_lock);
   return i;
 }
 
-int binarySearch(char * arr, long l, long r, char * x){
+int binarySearch(char * arr, int l, int r, char * x){
   while (l <= r){
-    long m = l + (r-l)/2;
-    long result = strcmp(x, arr[m]);
+    int m = l + (r-l)/2;
+    int result = strcmp(x, arr[m]);
     if (result == 0)
       return m;
     if (result > 0)
@@ -41,11 +41,11 @@ int binarySearch(char * arr, long l, long r, char * x){
 
 void * Worker(void * args){
   thread_args* arg = (thread_args*)args;
-  long size = arg->size;
+  int size = arg->size;
   char* a = arg->array;
   while (true) {
     // 1. Get word from bag
-    long i = getIndex();
+    int i = getIndex();
     if(i >= size) break;
     // 2. flip word
     const char * word = a[i];
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]){
   char const* const fileName = argv[1];
   char line[WORDLENGTH];
   FILE* file = fopen(fileName, "r");
-  long size = 0;
+  int size = 0;
 
   while (fgets(line, sizeof(line), file)) {
     size++;
