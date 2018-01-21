@@ -38,7 +38,7 @@ int binarySearch(int l, int r, char * x){
 }
 
 void * Worker(void * args){
-  int * size = (int *)args;
+  int size = *((int *)args);
 
   printf("Start working!!!\n");
   while (true) {
@@ -81,7 +81,7 @@ int main(int argc, char *argv[]){
   FILE* file = fopen(fileName, "r");
   int size = 0;
 
-  while (fgets(dictionary[size], sizeof(size[size]), file)) {
+  while (fgets(dictionary[size], sizeof(dictionary[size]), file)) {
     size++;
   }
   printf("Size %d\n", size);
