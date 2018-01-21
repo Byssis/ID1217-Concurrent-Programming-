@@ -6,7 +6,7 @@
 #include <string.h>
 #include <sys/time.h>
 
-#define MAXWORKERS 10
+#define MAXWORKERS 1
 #define WORDLENGTH 20
 pthread_mutex_t word_index_lock;
 
@@ -43,15 +43,19 @@ void * Worker(void * args){
   thread_args* arg = (thread_args*)args;
   int size = arg->size;
   char* a = arg->array;
+    printf("Start working!!!\n");
   while (true) {
     // 1. Get word from bag
     int i = getIndex();
+    printf("Start with index: %d \n", i);
     if(i >= size) break;
     // 2. flip word
     const char * word = a[i];
     const char * flip = word;//strrev(word);
+    printf("Start with index: %d \n", i);
     // 3. search for word in word array
     int result = binarySearch(a, 0, size, flip );
+    printf("binarySearch: %d \n", result);
     // 4. print if
     if(result != -1)
       printf("%s %s\n", word, flip);
