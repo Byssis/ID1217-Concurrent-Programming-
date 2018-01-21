@@ -28,10 +28,8 @@ char * reverse(char * word){
   int i, j;
   i = 0;
   j = strlen(word) - 1;
-  printf("%s\n", word );
   while (j >= 0) {
     r[i++] = *(word + j--);
-    printf("%d %d\n", i, j);
   }
   r[i] = '\0';
   return (char *)r;
