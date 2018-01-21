@@ -60,7 +60,7 @@ void * Worker(void * args){
     //printf("Start with index: %d \n", i);
     if(i >= size) break;
     // 2. flip word
-    char * word = (const char *)dictionary[i];
+    char * word = dictionary[i];
     //printf("Word %s \n", word);
     char * flip = reverse(word);
     // 3. search for word in word array
@@ -99,7 +99,7 @@ int main(int argc, char *argv[]){
   }
   printf("Size %d\n", size);
   fclose(file);
-
+  printf("%s\n", reverse(dictionary[0]) );
   printf("Words read\n");
   int numWorkers =  MAXWORKERS;
   pthread_t workerid[numWorkers];
