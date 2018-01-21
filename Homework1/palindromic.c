@@ -2,10 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include <time.h>
 #include <string.h>
-#include <sys/time.h>
 #include "bench.h"
+
 #define MAXWORKERS 10
 #define WORDLENGTH 40
 #define MAXSIZE 25143
@@ -49,17 +48,16 @@ int binarySearch(int l, int r, char * x){
 
 void * Worker(void * args){
   int size = *((int *)args);
-  //printf("Start working!!!\n");
+
   while (true) {
     // 1. Get word from bag
     int i = getIndex();
-    //printf("Start with index: %d \n", i);
     if(i >= size) break;
     // 2. flip word
     char * word = dictionary[i];
     char flip[WORDLENGTH];
     reverse(word, flip);
-    //printf("Word %s %s \n", word, flip);
+
     // 3. search for word in word array
     int result = binarySearch(0, size, flip);
     //printf("binarySearch: %d \n", result);
@@ -71,23 +69,25 @@ void * Worker(void * args){
 
 int main(int argc, char *argv[]){
   double start_time, end_time;
-  int numWorkers = (argc > 1)? atoi(argv[1]) : MAXWORKERS;
-  char const* const fileName = argv[2];
+  int k, l, size;
+  if(argc < 1){
+    printf("Argument missing: file to examine\n", );
+    exit(0);
+  }
+
+  char const* const fileName = argv[1];
 
   FILE* file = fopen(fileName, "r");
-  int size = 0;
-  int k;
   for (k = 0; k < MAXSIZE; k++) {
     fscanf(file, "%s", dictionary[k]);
   }
   size = k + 1;
   fclose(file);
 
-  //int numWorkers =  MAXWORKERS;
+  int numWorkers =  MAXWORKERS;
   pthread_t workerid[numWorkers];
 
   start_time = read_timer();
-  int l;
   for (l = 0; l < numWorkers; l++)
     pthread_create(&workerid[l], NULL, Worker, &size);
 
