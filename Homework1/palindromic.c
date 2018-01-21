@@ -64,7 +64,7 @@ void * Worker(void * args){
     char * flip = reverse(word);
     //printf("Word %s %s \n", word, flip);
     // 3. search for word in word array
-    int result = binarySearch(0, size, flip );
+    int result = binarySearch(0, size, word);
     //printf("binarySearch: %d \n", result);
     // 4. print if
     if(result != -1)
