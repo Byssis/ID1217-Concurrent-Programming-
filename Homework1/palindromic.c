@@ -8,7 +8,7 @@
 
 #define MAXWORKERS 4
 #define WORDLENGTH 40
-#define MAXSIZE 30000
+#define MAXSIZE 25143
 pthread_mutex_t word_index_lock;
 
 int word_index = 0;
@@ -93,10 +93,11 @@ int main(int argc, char *argv[]){
 
   FILE* file = fopen(fileName, "r");
   int size = 0;
-
-  while ( fscanf(file, "%s", dictionary[size])) {
-    size++;
+  int k;
+  for (k = 0; k < MAXSIZE; k++) {
+    fscanf(file, "%s", dictionary[i]);    
   }
+  size = k + 1;
   printf("Size %d\n", size);
   fclose(file);
   printf("%s\n", reverse(dictionary[0]) );
