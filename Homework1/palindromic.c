@@ -11,7 +11,7 @@
 pthread_mutex_t word_index_lock;
 
 typedef struct node {
-char* array[];
+char** array;
 int size;
 } thread_args;
 
