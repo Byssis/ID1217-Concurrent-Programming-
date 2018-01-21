@@ -25,7 +25,7 @@ int getIndex(){
   return i;
 }
 
-int binarySearch(char ** arr, int l, int r, char * x){
+int binarySearch(char * arr, int l, int r, char * x){
   while (l <= r){
     int m = l + (r-l)/2;
     int result = (int)strcmp(x, (arr + m));
@@ -42,7 +42,7 @@ int binarySearch(char ** arr, int l, int r, char * x){
 void * Worker(void * args){
   thread_args* arg = (thread_args*)args;
   int size = (int)arg->size;
-  char* a = (char *)arg->array;
+  char*  a = (char *)arg->array;
   printf("Start working!!!\n");
   while (true) {
     // 1. Get word from bag
@@ -107,7 +107,7 @@ int main(int argc, char *argv[]){
   thread_args args;
 
   args.size = size;
-  args.array = words;
+  args.array = (char* )words;
   int l;
   printf("Start threads %d\n", args.size);
   start_time = read_timer();
