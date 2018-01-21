@@ -29,7 +29,7 @@ int binarySearch(char * arr, int l, int r, char * x){
   printf("binarySearch: %d, %d, %s \n", l, r, x);
   while (l <= r){
     int m = l + (r-l)/2;
-    int result = (int)strcmp(x, arr[m]);
+    int result = (int)strcmp(x, (arr + m));
     printf("strcmp: %d \n", result);
     if (result == 0)
       return m;
