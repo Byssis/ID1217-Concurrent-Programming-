@@ -44,15 +44,15 @@ void * Worker(void * args){
   while (true) {
     // 1. Get word from bag
     int i = getIndex();
-    printf("Start with index: %d \n", i);
+    //printf("Start with index: %d \n", i);
     if(i >= size) break;
     // 2. flip word
     char * word = dictionary[i];
-    printf("Word %s \n", word);
-    char * flip = word;//strrev(word);
+    //printf("Word %s \n", word);
+    char * flip = strrev(word);
     // 3. search for word in word array
     int result = binarySearch(0, size, flip );
-    printf("binarySearch: %d \n", result);
+    //printf("binarySearch: %d \n", result);
     // 4. print if
     if(result != -1)
       printf("%s %s\n", word, flip);
@@ -99,8 +99,9 @@ int main(int argc, char *argv[]){
     pthread_create(&workerid[l], NULL, Worker, &size);
   }
 
-  for (l = 0; l < numWorkers; l++)
+  for (l = 0; l < numWorkers; l++){
     pthread_join(workerid[l],NULL);
+  }
 
   end_time = read_timer();
 
