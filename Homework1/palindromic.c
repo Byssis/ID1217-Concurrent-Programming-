@@ -77,7 +77,7 @@ int main(int argc, char *argv[]){
   }
 
   char const* const fileName = argv[1];
-
+  printf("WTF!!!\n");
   FILE* file = fopen(fileName, "r");
   for (k = 0; k < MAXSIZE; k++) {
     fscanf(file, "%s", dictionary[k]);
