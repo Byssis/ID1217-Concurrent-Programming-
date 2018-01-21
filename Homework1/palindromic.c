@@ -88,9 +88,10 @@ int main(int argc, char *argv[]){
   int i;
   char * words [size];
   file = fopen(fileName, "r");
-
+  printf("Read in words\n");
   while (fgets(line, sizeof(line), file)) {
     words[i++] = line;
+    printf("Index i: %d, Word: %s\n", i, line);
   }
   fclose(file);
   printf("Words read\n");
@@ -102,7 +103,7 @@ int main(int argc, char *argv[]){
   args.size = size;
   args.array = words;
   int l;
-  printf("Size %d\n", args.size);
+  printf("Start threads %d\n", args.size);
   start_time = read_timer();
   for (l = 0; l < numWorkers; l++)
     pthread_create(&workerid[l], NULL, Worker, &args);
