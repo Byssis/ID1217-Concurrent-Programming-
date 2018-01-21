@@ -28,11 +28,11 @@ void reverse(char * word, char * r){
   i = 0;
   j = strlen(word) - 1;
   while (j >= 0) {
-    r = *(word + j--);
-    r += ++i;
+    r[i++] = *(word + j--);
+  //  r += ++i;
   }
   //r[i++] = '\n';
-  r  = '\0';
+  r[i]  = '\0';
 }
 
 int binarySearch(int l, int r, char * x){
