@@ -31,7 +31,7 @@ char * reverse(char * word){
   while (j >= 0) {
     r[i++] = *(word + j--);
   }
-  r[i++] = '\n';
+  //r[i++] = '\n';
   r[i] = '\0';
   return (char *)r;
 }
@@ -64,7 +64,7 @@ void * Worker(void * args){
     char * flip = reverse(word);
     //printf("Word %s %s \n", word, flip);
     // 3. search for word in word array
-    int result = binarySearch(0, size, word);
+    int result = binarySearch(0, size, flip);
     //printf("binarySearch: %d \n", result);
     // 4. print if
     if(result != -1)
