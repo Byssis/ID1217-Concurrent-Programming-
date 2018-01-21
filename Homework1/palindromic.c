@@ -6,7 +6,7 @@
 #include <string.h>
 #include <sys/time.h>
 
-#define MAXWORKERS 1
+#define MAXWORKERS 10
 #define WORDLENGTH 40
 #define MAXSIZE 25143
 pthread_mutex_t word_index_lock;
@@ -23,17 +23,15 @@ int getIndex(){
   return i;
 }
 
-char * reverse(char * word){
-  char r[WORDLENGTH];
+void reverse(char * word, char * r){
   int i, j;
   i = 0;
   j = strlen(word) - 1;
   while (j >= 0) {
-    r[i++] = *(word + j--);
+    (r + i++) = *(word + j--);
   }
   //r[i++] = '\n';
-  r[i] = '\0';
-  return (char *)r;
+  (r + i) = '\0';
 }
 
 int binarySearch(int l, int r, char * x){
@@ -61,7 +59,8 @@ void * Worker(void * args){
     if(i >= size) break;
     // 2. flip word
     char * word = dictionary[i];
-    char * flip = reverse(word);
+    char flip[WORDLENGTH];
+    reverse(word, flip);
     //printf("Word %s %s \n", word, flip);
     // 3. search for word in word array
     int result = binarySearch(0, size, flip);
