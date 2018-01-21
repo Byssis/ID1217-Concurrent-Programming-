@@ -68,7 +68,7 @@ void * Worker(void * args){
 
     if(i >= size) break;
     int j;
-    for (j = 0; j < TASKLENGTH || (i + j) >= size; j++) {
+    for (j = 0; j < TASKLENGTH && (i + j) >= size; j++) {
       // 2. flip word
       char * word = dictionary[i + j];
       char flip[WORDLENGTH];
