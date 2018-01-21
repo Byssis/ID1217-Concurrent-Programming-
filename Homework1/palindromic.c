@@ -6,7 +6,7 @@
 #include <string.h>
 #include <sys/time.h>
 
-#define MAXWORKERS 4
+#define MAXWORKERS 1
 #define WORDLENGTH 40
 #define MAXSIZE 25143
 pthread_mutex_t word_index_lock;
@@ -53,7 +53,7 @@ int binarySearch(int l, int r, char * x){
 void * Worker(void * args){
   int size = *((int *)args);
 
-  printf("Start working!!!\n");
+  //printf("Start working!!!\n");
   while (true) {
     // 1. Get word from bag
     int i = getIndex();
