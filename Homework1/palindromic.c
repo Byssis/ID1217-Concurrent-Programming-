@@ -94,7 +94,7 @@ int main(int argc, char *argv[]){
   FILE* file = fopen(fileName, "r");
   int size = 0;
 
-  while (fgets(dictionary[size], sizeof(dictionary[size]), file)) {
+  while ( fscanf(file, "%s", dictionary[size])) {
     size++;
   }
   printf("Size %d\n", size);
