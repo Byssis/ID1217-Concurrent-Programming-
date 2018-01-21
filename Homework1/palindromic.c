@@ -27,7 +27,7 @@ void reverse(char * word, char * r){
   i = 0;
   j = strlen(word) - 1;
   while (j >= 0) {
-    r[i++] = word[j];
+    r[i++] = word[j++];
   }
   r[i]  = '\0';
 }
