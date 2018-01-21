@@ -1,3 +1,14 @@
+/*
+finding palindromic words in a dictionary using pthreads
+
+   features: uses a number of worker(threads),
+      each worker get task fram a bag of task(getIndex).
+
+   usage under Linux:
+     gcc -o palindromic palindromic.c -lpthread
+     palindromic fileName
+*/
+
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -7,6 +18,7 @@
 
 #define MAXWORKERS 10
 #define WORDLENGTH 40
+#define TASKLENGTH 10
 #define MAXSIZE 25143
 pthread_mutex_t word_index_lock;
 
@@ -17,7 +29,8 @@ char dictionary[MAXSIZE][WORDLENGTH];
 int getIndex(){
   int i;
   pthread_mutex_lock(&word_index_lock);
-  i = word_index++;
+  i = word_index;
+  word_index += TASKLENGTH;
   pthread_mutex_unlock(&word_index_lock);
   return i;
 }
@@ -52,25 +65,28 @@ void * Worker(void * args){
   while (true) {
     // 1. Get word from bag
     int i = getIndex();
-    if(i >= size) break;
-    // 2. flip word
-    char * word = dictionary[i];
-    char flip[WORDLENGTH];
-    reverse(word, flip);
 
-    // 3. search for word in word array
-    int result = binarySearch(0, size, flip);
-    //printf("binarySearch: %d \n", result);
-    // 4. print if
-    if(result != -1)
-      printf("%s %s\n", word, flip);
+    if(i >= size) break;
+    int j;
+    for (j = 0; j < TASKLENGTH || (i + j) >= size; j++) {
+      // 2. flip word
+      char * word = dictionary[i + j];
+      char flip[WORDLENGTH];
+      reverse(word, flip);
+
+      // 3. search for word in word array
+      int result = binarySearch(0, size, flip);
+      //printf("binarySearch: %d \n", result);
+      // 4. print if
+      if(result != -1)
+        printf("%s %s\n", word, flip);
+    }
   }
 }
 
 int main(int argc, char *argv[]){
   double start_time, end_time;
   int k, l, size;
-  printf("Palindromic words: \n");
   if(argc < 2){
     printf("Error! Argument missing: file to examine\n");
     exit(0);
@@ -82,22 +98,20 @@ int main(int argc, char *argv[]){
   for (k = 0; k < MAXSIZE; k++) {
     fscanf(file, "%s", dictionary[k]);
   }
-    printf("WTF!!!\n");
-  size = k + 1;
   fclose(file);
+  size = k + 1;
 
   int numWorkers =  MAXWORKERS;
   pthread_t workerid[numWorkers];
-  printf("WTF!!!\n");
-  start_time = read_timer();
-  for (l = 0; l < numWorkers; l++){
-    printf("Worker: %d\n", l);
-    pthread_create(&workerid[l], NULL, Worker, &size);
-  }
 
-  for (l = 0; l < numWorkers; l++){
+  start_time = read_timer();                  // Start time for benchmark
+
+  for (l = 0; l < numWorkers; l++)
+    pthread_create(&workerid[l], NULL, Worker, &size);
+
+  for (l = 0; l < numWorkers; l++)
     pthread_join(workerid[l],NULL);
-  }
+
   end_time = read_timer();
 
   printf("The execution time is %g sec\n", end_time - start_time);
