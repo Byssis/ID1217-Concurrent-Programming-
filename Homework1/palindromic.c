@@ -15,7 +15,7 @@ char* array;
 int size;
 } thread_args;
 
-int word_index;
+int word_index = 0;
 
 int getIndex(){
   int i;
@@ -85,7 +85,8 @@ int main(int argc, char *argv[]){
   }
   printf("Size %d\n", size);
   fclose(file);
-  int i ;
+  int i = 0;
+
   char * words [size];
   file = fopen(fileName, "r");
   printf("Read in words\n");
