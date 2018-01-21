@@ -140,7 +140,7 @@ int main(int argc, char *argv[]) {
 }
 
 void *Worker(void *arg) {
-  int i, j, wmin, wminI, wminJ, wmax, wmaxI, wmaxJ;
+  int i, j, wmin, wminI, wminJ, wmax, wmaxI, wmaxJ, total;
 
 #ifdef DEBUG
   printf("worker %d (pthread id %d) has started\n", myid, pthread_self());
@@ -150,6 +150,7 @@ void *Worker(void *arg) {
     i = getTaskFromBag();
     if(i >= size) break;
 
+    total = 0;
     wmin = matrix[0][0];
     wmax = matrix[0][0];
 
