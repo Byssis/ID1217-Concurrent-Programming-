@@ -31,6 +31,7 @@ char * reverse(char * word){
   printf("%s\n", word );
   while (j >= 0) {
     r[i++] = *(word + j++);
+    printf("%d %d\n", i, j);
   }
   r[i] = '\0';
   return (char *)r;
