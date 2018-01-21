@@ -85,8 +85,8 @@ double read_timer() {
 
 int main(int argc, char *argv[]){
   double start_time, end_time;
-  char const* const fileName = argv[1];
-  int numWorkers = (argc > 2)? atoi(argv[2]) : MAXWORKERS;
+  int numWorkers = (argc > 1)? atoi(argv[1]) : MAXWORKERS;
+  char const* const fileName = argv[2];
 
   FILE* file = fopen(fileName, "r");
   int size = 0;
