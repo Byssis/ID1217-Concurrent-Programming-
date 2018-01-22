@@ -49,8 +49,6 @@ void quicksort(int array[], int lo, int hi){
 
 /*
   co_quicksort
-
-
 */
 void * co_quicksort(void * arg){
   theard_args * node = (theard_args *) arg;
