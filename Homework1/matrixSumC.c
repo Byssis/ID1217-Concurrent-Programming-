@@ -125,7 +125,7 @@ int main(int argc, char *argv[]) {
   /* do the parallel work: create the workers */
   start_time = read_timer();
   for (l = 0; l < numWorkers; l++)
-    pthread_create(&workerid[l], &attr, Worker, (void *) l);
+    pthread_create(&workerid[l], NULL, Worker, (void *) l);
 
   for (l = 0; l < numWorkers; l++){
     pthread_join(workerid[l],NULL);
@@ -141,15 +141,13 @@ int main(int argc, char *argv[]) {
 void *Worker(void *arg) {
   int i, j, wmin, wminI, wminJ, wmax, wmaxI, wmaxJ, total;
 
-//#ifdef DEBUG
+#ifdef DEBUG
   printf("worker %d (pthread id %d) has started\n", myid, pthread_self());
-//#endif
+#endif
 
   while (true) {
-      printf("row %d (pthread id %d) has started\n", i, pthread_self());
     i = getTaskFromBag();
     if(i >= size) break;
-  printf("row %d (pthread id %d) has started\n", i, pthread_self());
     total = 0;
     wmin = matrix[0][0];
     wmax = matrix[0][0];
