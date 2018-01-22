@@ -34,7 +34,7 @@ int maxValue, maxI, maxJ;
 int minValue, minI, minJ;
 int sumValue;
 
-int row;
+int row = 0;
 
 void UpdateMax(int value, int i, int j){
   pthread_mutex_lock(&max);
