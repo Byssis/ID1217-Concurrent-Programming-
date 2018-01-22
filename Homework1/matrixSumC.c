@@ -141,18 +141,19 @@ int main(int argc, char *argv[]) {
 void *Worker(void *arg) {
   int i, j, wmin, wminI, wminJ, wmax, wmaxI, wmaxJ, total;
 
-#ifdef DEBUG
+//#ifdef DEBUG
   printf("worker %d (pthread id %d) has started\n", myid, pthread_self());
-#endif
+//#endif
 
   while (true) {
+      printf("row %d (pthread id %d) has started\n", i, pthread_self());
     i = getTaskFromBag();
     if(i >= size) break;
-
+  printf("row %d (pthread id %d) has started\n", i, pthread_self());
     total = 0;
     wmin = matrix[0][0];
     wmax = matrix[0][0];
-    printf("row %d (pthread id %d) has started\n", i, pthread_self());
+
     for (j = 0; j < size; j++){
       total += matrix[i][j];
       if(matrix[i][j] > wmax){
