@@ -129,7 +129,6 @@ int main(int argc, char *argv[]) {
 
   for (l = 0; l < numWorkers; l++){
     pthread_join(workerid[l],NULL);
-    printf("%d\n", l);
   }
   end_time = read_timer();
 
@@ -153,7 +152,7 @@ void *Worker(void *arg) {
     total = 0;
     wmin = matrix[0][0];
     wmax = matrix[0][0];
-
+    printf("row %d (pthread id %d) has started\n", i, pthread_self());
     for (j = 0; j < size; j++){
       total += matrix[i][j];
       if(matrix[i][j] > wmax){
@@ -161,7 +160,7 @@ void *Worker(void *arg) {
         wmaxI = i;
         wmaxJ = j;
       }
-      if(matrix[i][j] < wmin){
+      if(matrix[i][j] <= wmin){
         wmin = matrix[i][j];
         wminI = i;
         wminJ = j;
