@@ -107,7 +107,7 @@ int main(int argc, char *argv[]) {
   /* initialize the matrix */
   for (i = 0; i < size; i++) {
 	  for (j = 0; j < size; j++) {
-      matrix[i][j] = rand()%99;
+      matrix[i][j] = 1;//rand()%99;
 	  }
   }
 
@@ -164,9 +164,9 @@ void *Worker(void *arg) {
         wminI = i;
         wminJ = j;
       }
-      UpdateMax(wmax, wmaxI, wmaxJ);
-      UpdateMin(wmin, wminI, wminJ);
-      UpdateSum(total);
     }
+    UpdateMax(wmax, wmaxI, wmaxJ);
+    UpdateMin(wmin, wminI, wminJ);
+    UpdateSum(total);
   }
 }
