@@ -55,7 +55,7 @@ Initialize(void)
     unsigned char   *s;
 
     for (i = 0; i < 256; i++)
-	     u2l[i] = 0;
+	     u2l[i] = i;
 
     for (s = (unsigned char *) ALPHABET; *s; s++)
     {
@@ -109,23 +109,6 @@ Initialize(void)
     u2l[ch +  - 'a' + 'A'] = u2l[ch] = 'y';
     ch = 255;
     u2l[ch +  - 'a' + 'A'] = u2l[ch] = 'y';
-
-    /*
-     * Kontrollutskrift
-     *
-     */
-
-    /*
-    for (ch = 65; ch < 255; ++ch)
-    {
-	printf ("Kod %u tecken %c lagrat %c \n",
-		(unsigned) ch, ch, u2l[ch]);
-    }
-
-    ch = 255;
-    printf ("Kod %u tecken %c lagrat %c \n",
-	    (unsigned) ch, ch, u2l[ch]);
-    */
 }
 
 int main(void)
