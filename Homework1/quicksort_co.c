@@ -33,7 +33,7 @@ void * co_quicksort(void * arg);
   int hi        higher bound of sub array of array to be sorted
 */
 void quicksort(int array[], int lo, int hi){
-  printf("Hej\n", size);
+  printf("Hej\n");
 
   pthread_t tidl, tidr;
   if(lo >= hi) return;                        // Base case for recursion
