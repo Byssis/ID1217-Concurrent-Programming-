@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
-##include "bench.h"
+#include "bench.h"
 
 #define ARRAY_SIZE 10000000
 #define MIN_SIZE 10
