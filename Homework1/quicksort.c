@@ -31,6 +31,7 @@ int swap(int array[], int p1, int p2 ){
 
 int main(int argc, char *argv[]){
   int size = (argc > 1)? atoi(argv[1]) : MAXSIZE;
+  int array[size];
   int i;
   for (i = 0; i < ARRAY_SIZE-1; i++)
     array[i]= rand() % 99;
