@@ -108,7 +108,7 @@ int main(int argc, char *argv[]){
 
   start_time = read_timer();                  // Start time for benchmark
 
-  for (l = 0; l < numWorkers; l++)
+  /*for (l = 0; l < numWorkers; l++)
     pthread_create(&workerid[l], NULL, Worker, &size);
 
   for (l = 0; l < numWorkers; l++)
@@ -116,5 +116,7 @@ int main(int argc, char *argv[]){
 
   end_time = read_timer();
 
-  printf("The execution time is %g sec\n", end_time - start_time);
+  printf("The execution time is %g sec\n", end_time - start_time);*/
+
+  binarySearch(0, size, "a");
 }
