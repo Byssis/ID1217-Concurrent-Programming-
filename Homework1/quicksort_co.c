@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+##include "bench.h"
 
 #define ARRAY_SIZE 10000000
 #define MIN_SIZE 10
@@ -78,8 +79,11 @@ int main(){
   int i;
   for (i = 0; i < ARRAY_SIZE-1; i++)
     array[i]= rand() % 99;
+  double start_time = read_timer();
   quicksort(array, 0, ARRAY_SIZE-1);
-  for (i = 0; i < ARRAY_SIZE-1; i++) {
+  double end_time = read_timer();
+  /*for (i = 0; i < ARRAY_SIZE-1; i++) {
     printf("%d, ", array[i]);
-  }
+  }*/
+  printf("The execution time is %g sec\n", end_time - start_time);
 }

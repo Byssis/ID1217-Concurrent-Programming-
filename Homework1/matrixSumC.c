@@ -127,6 +127,7 @@ int main(int argc, char *argv[]) {
   for (l = 0; l < numWorkers; l++)
     pthread_create(&workerid[l], NULL, Worker, (void *) l);
 
+  // Wait for other workers to finish
   for (l = 0; l < numWorkers; l++){
     pthread_join(workerid[l],NULL);
   }
@@ -147,7 +148,7 @@ void *Worker(void *arg) {
 
   while (true) {
     i = getTaskFromBag();
-    if(i >= size) break;
+    if(i >= size) break;                // No tasks left
     total = 0;
     wmin = matrix[0][0];
     wmax = matrix[0][0];
