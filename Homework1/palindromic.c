@@ -49,6 +49,7 @@ int binarySearch(int l, int r, char * x){
   while (l <= r){
     int m = l + (r-l)/2;
     int result = (int)strcmp(x, dictionary[m]);
+    printf("l: %d, r: %d, m: %d, word: %s, dic: %s, res: %d \n", l,r,m, x, dictionary[m], result);
     if (result == 0)
       return m;
     if (result > 0)
