@@ -14,7 +14,7 @@ double fun(double x){
 
 double dabs(double x){
   if(x > 0.0) return x;
-  else return x * 1.0;
+  else return x * -1.0;
 }
 
 int i = 0;
