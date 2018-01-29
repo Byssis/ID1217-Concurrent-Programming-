@@ -4,7 +4,7 @@
 #include <math.h>
 #include "bench.h"
 
-#define FACTOR 100000.0
+#define FACTOR 1000.0
 
 pthread_mutex_t lock;
 
