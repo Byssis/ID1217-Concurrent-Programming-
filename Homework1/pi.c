@@ -39,7 +39,7 @@ double quad(double l, double r, double fl, double fr, double area){
 
 int main(int argc, char *argv[]) {
   double a, b, area, fa, fb,result, start_time, end_time;
-  error = 0.00001;//(double)atoi(argv[1]);
+  error = 0.00000001;//(double)atoi(argv[1]);
   start_time = read_timer();
   a = 0;
   b = 1;
