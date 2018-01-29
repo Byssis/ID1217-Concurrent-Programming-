@@ -95,7 +95,7 @@ int main(int argc, char *argv[]){
   char const* const fileName = argv[1];
 
   FILE* file = fopen(fileName, "r");
-  while(fscanf(fp,"%s",dictionary[k++]) == 1);
+  while(fscanf(file,"%s",dictionary[k++]) == 1);
   fclose(file);
   size = k + 1;
 
