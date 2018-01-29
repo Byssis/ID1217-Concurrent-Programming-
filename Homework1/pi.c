@@ -1,7 +1,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <cmath.h>
+#include <math.h>
 
 #define ERROR 0.1
 
