@@ -53,8 +53,8 @@ void quicksort(int array[], int lo, int hi){
     pthread_mutex_unlock(&num_workers);
     quicksort(array, lo, p-1);                // normal quicksort
   }
-
-  pthread_mutex_lock(&num_workers);
+  quicksort(array, p+1, hi);
+  /*pthread_mutex_lock(&num_workers);
   if(current_workers < max_workers){                       // Decide if to create a new thread
     current_workers++;
     pthread_mutex_unlock(&num_workers);
@@ -68,7 +68,7 @@ void quicksort(int array[], int lo, int hi){
   else {
     pthread_mutex_unlock(&num_workers);
     quicksort(array, p+1, hi);
-  }
+  }*/
   if(l)pthread_join(tidl, NULL);
   if(r)pthread_join(tidr, NULL);
 
