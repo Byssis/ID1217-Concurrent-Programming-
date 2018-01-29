@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "bench.h"
-
+#include "checksorted.h"
 #define MAXSIZE 100000
 void quicksort(int array[], int lo, int hi){
   if(lo >= hi) return;
@@ -39,5 +39,12 @@ int main(int argc, char *argv[]){
   double start_time = read_timer();
   quicksort(array, 0, size-1);
   double end_time = read_timer();
+
+  if(ifsorted(array, size)){
+    printf("Array sorted\n");
+  }
+  else {
+    printf("Error\n");
+  }
   printf("The execution time is %g sec\n", end_time - start_time);
 }

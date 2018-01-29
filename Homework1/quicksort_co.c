@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include "bench.h"
+#include "checksorted.h"
 
 #define MAXSIZE 100000
 #define MAXWORKERS 10
@@ -53,8 +54,8 @@ void quicksort(int array[], int lo, int hi){
     pthread_mutex_unlock(&num_workers);
     quicksort(array, lo, p-1);                // normal quicksort
   }
-  quicksort(array, p+1, hi);
-  /*pthread_mutex_lock(&num_workers);
+
+  pthread_mutex_lock(&num_workers);
   if(current_workers < max_workers){                       // Decide if to create a new thread
     current_workers++;
     pthread_mutex_unlock(&num_workers);
@@ -68,7 +69,7 @@ void quicksort(int array[], int lo, int hi){
   else {
     pthread_mutex_unlock(&num_workers);
     quicksort(array, p+1, hi);
-  }*/
+  }
   if(l)pthread_join(tidl, NULL);
   if(r)pthread_join(tidr, NULL);
 
@@ -87,7 +88,7 @@ void * co_quicksort(void * arg){
 
 int partition(int array[], int lo, int hi){
   int p = array[hi];
-  int i   = lo - 1;
+  int i = lo - 1;
   int j;
   for (j = lo; j < hi; j++){
     if( array [j] < p)
@@ -114,8 +115,11 @@ int main(int argc, char *argv[]){
   double start_time = read_timer();
   quicksort(array, 0, size-1);
   double end_time = read_timer();
-  /*for (i = 0; i < ARRAY_SIZE-1; i++) {
-    printf("%d, ", array[i]);
-  }*/
+  if(ifsorted(array, size)){
+    printf("Array sorted\n");
+  }
+  else {
+    printf("Error\n");
+  }
   printf("The execution time is %g sec\n", end_time - start_time);
 }
