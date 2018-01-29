@@ -8,7 +8,8 @@
 double fun(double x){
   double result;
   result = 1.0 - x*x;
-  return sqrt( result );
+  result = sqrt( result );
+  return result;
 }
 
 double quad(double l, double r, double fl, double fr, double area){
