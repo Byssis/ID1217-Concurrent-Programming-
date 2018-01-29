@@ -6,7 +6,9 @@
 #define ERROR 0.1
 
 double fun(double x){
-  return sqrt( 1.0 - x * x );
+  double result;
+  result = 1.0 - x*x;
+  return sqrt( result );
 }
 
 double quad(double l, double r, double fl, double fr, double area){
