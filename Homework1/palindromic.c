@@ -16,9 +16,9 @@ finding palindromic words in a dictionary using pthreads
 #include <string.h>
 #include "bench.h"
 
-#define MAXWORKERS 10
+#define MAXWORKERS 1
 #define WORDLENGTH 40
-#define TASKLENGTH 10
+#define TASKLENGTH 1
 #define MAXSIZE 30000
 pthread_mutex_t word_index_lock;
 
@@ -73,6 +73,7 @@ void * Worker(void * args){
       char * word = dictionary[i + j];
       char flip[WORDLENGTH];
       reverse(word, flip);
+      printf("Current word: %s, reverse: %s\n",word, flip);
 
       // 3. search for word in word array
       int result = binarySearch(0, size, flip);
@@ -80,6 +81,8 @@ void * Worker(void * args){
       // 4. print if
       if(result != -1)
         printf("%s %s\n", word, flip);
+
+      printf("\n");
     }
   }
 }
