@@ -3,10 +3,8 @@
 #include <pthread.h>
 #include "bench.h"
 
-#define ARRAY_SIZE 100000
+#define MAXSIZE 100000
 #define MIN_SIZE 10
-
-int array [ARRAY_SIZE];
 
 typedef struct node {
 int* array;
