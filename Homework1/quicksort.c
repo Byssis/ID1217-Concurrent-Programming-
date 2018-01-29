@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "bench.h"
 
+#define MAXSIZE 100000
 void quicksort(int array[], int lo, int hi){
   if(lo >= hi) return;
   int p = partition(array, lo, hi);
@@ -13,7 +15,7 @@ int partition(int array[], int lo, int hi){
   int i = lo - 1;
   int j;
   for (j = lo; j < hi; j++){
-    if( array [j] < p)
+    if( array [j] < p )
       swap(array, ++i, j);
   }
   if(array[hi] < array[i+1])
@@ -28,12 +30,13 @@ int swap(int array[], int p1, int p2 ){
 }
 
 int main(){
-  int array [] = {3,4,7,7,7,3,9,7,4,3,2,1,6,73,8};
-  int size = (int)( sizeof(array) / sizeof(array[0]));
-  //printf("%d\n", size);
-  quicksort(array, 0, size-1);
+  int size = (argc > 1)? atoi(argv[1]) : MAXSIZE;
   int i;
-  for (i = 0; i < (int)( sizeof(array) / sizeof(array[0]))-1; i++) {
-    printf("%d, ", array[i]);
-  }
+  for (i = 0; i < ARRAY_SIZE-1; i++)
+    array[i]= rand() % 99;
+  //printf("%d\n", size);
+  double start_time = read_timer();
+  quicksort(array, 0, size-1);
+  double end_time = read_timer();
+  printf("The execution time is %g sec\n", end_time - start_time);
 }

@@ -76,11 +76,12 @@ int swap(int array[], int p1, int p2 ){
 }
 
 int main(){
+  int size = (argc > 1)? atoi(argv[1]) : MAXSIZE;
   int i;
-  for (i = 0; i < ARRAY_SIZE-1; i++)
+  for (i = 0; i < size; i++)
     array[i]= rand() % 99;
   double start_time = read_timer();
-  quicksort(array, 0, ARRAY_SIZE-1);
+  quicksort(array, 0, size-1);
   double end_time = read_timer();
   /*for (i = 0; i < ARRAY_SIZE-1; i++) {
     printf("%d, ", array[i]);
