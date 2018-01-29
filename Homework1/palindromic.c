@@ -16,7 +16,7 @@ finding palindromic words in a dictionary using pthreads
 #include <string.h>
 #include "bench.h"
 
-#define MAXWORKERS 1
+#define MAXWORKERS 5
 #define WORDLENGTH 40
 #define TASKLENGTH 1
 #define MAXSIZE 30000
@@ -49,7 +49,7 @@ int binarySearch(int l, int r, char * x){
   while (l <= r){
     int m = l + (r-l)/2;
     int result = (int)strcmp(x, dictionary[m]);
-    printf("l: %d, r: %d, m: %d, word: %s, dic: %s, res: %d \n", l,r,m, x, dictionary[m], result);
+    //printf("l: %d, r: %d, m: %d, word: %s, dic: %s, res: %d \n", l,r,m, x, dictionary[m], result);
     if (result == 0)
       return m;
     if (result > 0)
@@ -74,7 +74,7 @@ void * Worker(void * args){
       char * word = dictionary[i + j];
       char flip[WORDLENGTH];
       reverse(word, flip);
-      printf("Current word: %s, reverse: %s\n",word, flip);
+      //printf("Current word: %s, reverse: %s\n",word, flip);
 
       // 3. search for word in word array
       int result = binarySearch(0, size, flip);
@@ -83,7 +83,7 @@ void * Worker(void * args){
       if(result != -1)
         printf("%s %s\n", word, flip);
 
-      printf("\n");
+      //printf("\n");
     }
   }
 }
@@ -102,7 +102,7 @@ int main(int argc, char *argv[]){
   while(fscanf(file,"%s",dictionary[k++]) == 1);
   fclose(file);
   size = k - 1;
-  printf("Size: %d\n", size);
+  //printf("Size: %d\n", size);
   int numWorkers =  MAXWORKERS;
   pthread_t workerid[numWorkers];
 
