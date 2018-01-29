@@ -30,7 +30,7 @@ void * co_quicksort(void * arg);
 void quicksort(int array[], int lo, int hi){
   if(lo >= hi) return;                        // Base case for recursion
   int p = partition(array, lo, hi);           // Get pivot element
-  if(lo-hi > MIN_SIZE){                       // Decide if to create a new thread
+  if(hi-lo > MIN_SIZE){                       // Decide if to create a new thread
     theard_args n1;                           // args to new thread
     n1.array = array;                         // pointer to array
     n1.lo = lo;                               // lower bound
