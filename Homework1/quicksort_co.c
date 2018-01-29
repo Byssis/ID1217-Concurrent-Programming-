@@ -33,12 +33,15 @@ void * co_quicksort(void * arg);
   int hi        higher bound of sub array of array to be sorted
 */
 void quicksort(int array[], int lo, int hi){
+  printf("Hej\n", size);
+
   pthread_t tidl, tidr;
   if(lo >= hi) return;                        // Base case for recursion
   int p = partition(array, lo, hi);           // Get pivot element
   pthread_mutex_lock(&num_workers);
   if(current_workers < max_workers){                       // Decide if to create a new thread
     current_workers++;
+    printf("%d\n", current_workers);
     pthread_mutex_unlock(&num_workers);
     theard_args n1;                           // args to new thread
     n1.array = array;                         // pointer to array
@@ -54,6 +57,7 @@ void quicksort(int array[], int lo, int hi){
   pthread_mutex_lock(&num_workers);
   if(current_workers < max_workers){                       // Decide if to create a new thread
     current_workers++;
+    printf("%d\n", current_workers);
     pthread_mutex_unlock(&num_workers);
     theard_args n1;                           // args to new thread
     n1.array = array;                         // pointer to array
@@ -110,8 +114,6 @@ int main(int argc, char *argv[]){
   int array[size];
   for (i = 0; i < size; i++)
     array[i]= rand() % 99;
-  printf("Size: %d\n", size);
-  printf("Workers: %d\n", max_workers);
   double start_time = read_timer();
   quicksort(array, 0, size-1);
   double end_time = read_timer();
