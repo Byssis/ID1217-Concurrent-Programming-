@@ -20,7 +20,8 @@ double quad(double l, double r, double fl, double fr, double area){
   fm = fun(m);
   larea = ( fl + fm ) * ( m - l ) / 2;
   rarea = ( fl + fr ) * ( r - m ) / 2;
-  if(abs((larea + rarea) - area)*100000 > ERROR){
+  printf("%f\n", (larea + rarea));
+  if(abs((larea + rarea) - area) > ERROR){
     larea = quad(l, m, fl, fm, larea);
     rarea = quad(m, r, fm, fr, rarea);
   }
