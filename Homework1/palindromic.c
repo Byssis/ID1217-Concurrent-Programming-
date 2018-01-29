@@ -49,7 +49,7 @@ int binarySearch(int l, int r, char * x){
   while (l <= r){
     int m = l + (r-l)/2;
     int result = (int)strcmp(x, dictionary[m]);
-    printf("l: %d, r: %d, m: %d, word: %s, dic: %s, res: %d \n", l,r,m, x, dictionary[m], result);
+    //printf("l: %d, r: %d, m: %d, word: %s, dic: %s, res: %d \n", l,r,m, x, dictionary[m], result);
     if (result == 0)
       return m;
     if (result > 0)
@@ -114,7 +114,7 @@ int main(int argc, char *argv[]){
 
   start_time = read_timer();                  // Start time for benchmark
 
-  /*for (l = 0; l < numWorkers; l++)
+  for (l = 0; l < numWorkers; l++)
     pthread_create(&workerid[l], NULL, Worker, &size);
 
   for (l = 0; l < numWorkers; l++)
@@ -122,7 +122,5 @@ int main(int argc, char *argv[]){
 
   end_time = read_timer();
 
-  printf("The execution time is %g sec\n", end_time - start_time);*/
-
-  binarySearch(0, size, "a");
+  printf("The execution time is %g sec\n", end_time - start_time);
 }
