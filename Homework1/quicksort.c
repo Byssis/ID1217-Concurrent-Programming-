@@ -33,7 +33,7 @@ int main(int argc, char *argv[]){
   int size = (argc > 1)? atoi(argv[1]) : MAXSIZE;
   int array[size];
   int i;
-  for (i = 0; i < MAXSIZE; i++)
+  for (i = 0; i < size; i++)
     array[i]= rand() % 99;
   //printf("%d\n", size);
   double start_time = read_timer();
