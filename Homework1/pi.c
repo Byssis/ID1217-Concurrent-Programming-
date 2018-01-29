@@ -32,7 +32,7 @@ int main() {
   fa = fun(a);
   fb = fun(b);
   area = ( fa + fb ) * ( fb - fa ) / 2;
-  result = quad(a, b, fa, fb, area);
+  result = 4 * quad(a, b, fa, fb, area);
   printf("%f\n", result);
   return 0;
 }
