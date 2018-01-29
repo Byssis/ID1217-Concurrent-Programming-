@@ -4,8 +4,6 @@
 #include <math.h>
 #include "bench.h"
 
-#define FACTOR 1000.0
-
 pthread_mutex_t lock;
 
 double error;
@@ -13,8 +11,7 @@ int num_workers;
 
 double fun(double x){
   double result;
-  //x = x * FACTOR;
-  result = FACTOR - x*x;
+  result = 1.0 - x*x;
   result = sqrt( result );
   return result;
 }
@@ -44,8 +41,8 @@ int main(int argc, char *argv[]) {
   double a, b, area, fa, fb,result, start_time, end_time;
   error = 0.00000001;//(double)atoi(argv[1]);
   start_time = read_timer();
-  a = 0.0 * FACTOR;
-  b = 1.0 * FACTOR;
+  a = 0.0;
+  b = 1.0;
   fa = fun(a);
   fb = fun(b);
   area = ( fa + fb ) * ( fb - fa ) / 2.0;
