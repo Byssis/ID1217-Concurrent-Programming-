@@ -48,7 +48,7 @@ void reverse(char * word, char * r){
 int binarySearch(int l, int r, char * x){
   while (l <= r){
     int m = l + (r-l)/2;
-    int result = (int)srtcasecmp(x, dictionary[m]);
+    int result = (int)strcmp(x, dictionary[m]);
     printf("l: %d, r: %d, m: %d, word: %s, dic: %s, res: %d \n", l,r,m, x, dictionary[m], result);
     if (result == 0)
       return m;
@@ -99,7 +99,13 @@ int main(int argc, char *argv[]){
   char const* const fileName = argv[1];
 
   FILE* file = fopen(fileName, "r");
-  while(fscanf(file,"%s",dictionary[k++]) == 1);
+  while(fscanf(file,"%s",dictionary[k]) == 1){
+    int i;
+    for(i= 0; dictionary[k][i]; i++){
+        dictionary[k][i] = tolower(dictionary[k][i]);
+    }
+    k++;
+  }
   fclose(file);
   size = k - 1;
   //printf("Size: %d\n", size);
