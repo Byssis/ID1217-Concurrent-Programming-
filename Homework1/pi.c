@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#define ERROR 0.0000001
+#define ERROR 0.00000001
 
 double fun(double x){
   double result;
@@ -26,7 +26,6 @@ double quad(double l, double r, double fl, double fr, double area){
   larea = ( fl + fm ) * ( m - l ) / 2;
   rarea = ( fl + fr ) * ( r - m ) / 2;
   a = dabs((larea + rarea) - area);
-  printf("%f\n", a);
   if(dabs((larea + rarea) - area) > ERROR){
     larea = quad(l, m, fl, fm, larea);
     rarea = quad(m, r, fm, fr, rarea);
