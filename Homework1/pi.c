@@ -13,7 +13,7 @@ int num_workers;
 
 double fun(double x){
   double result;
-  x = x * FACTOR;
+  //x = x * FACTOR;
   result = FACTOR - x*x;
   result = sqrt( result );
   return result;
