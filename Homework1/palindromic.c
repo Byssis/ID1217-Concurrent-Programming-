@@ -19,7 +19,7 @@ finding palindromic words in a dictionary using pthreads
 #define MAXWORKERS 10
 #define WORDLENGTH 40
 #define TASKLENGTH 10
-#define MAXSIZE 25143
+#define MAXSIZE 30000
 pthread_mutex_t word_index_lock;
 
 int word_index = 0;
@@ -86,7 +86,7 @@ void * Worker(void * args){
 
 int main(int argc, char *argv[]){
   double start_time, end_time;
-  int k, l, size;
+  int k = 0, l, size;
   if(argc < 2){
     printf("Error! Argument missing: file to examine\n");
     exit(0);
@@ -95,9 +95,7 @@ int main(int argc, char *argv[]){
   char const* const fileName = argv[1];
 
   FILE* file = fopen(fileName, "r");
-  for (k = 0; k < MAXSIZE; k++) {
-    fscanf(file, "%s", dictionary[k]);
-  }
+  while(fscanf(fp,"%s",dictionary[k++]) == 1);
   fclose(file);
   size = k + 1;
 
