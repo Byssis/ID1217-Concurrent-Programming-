@@ -34,7 +34,6 @@ void * co_quicksort(void * arg);
 */
 void quicksort(int array[], int lo, int hi){
   printf("lo: %d, hi: %d\n", lo, hi);
-
   pthread_t tidl, tidr;
   if(lo >= hi) return;                        // Base case for recursion
   int p = partition(array, lo, hi);           // Get pivot element
@@ -79,6 +78,7 @@ void quicksort(int array[], int lo, int hi){
 void * co_quicksort(void * arg){
   theard_args * node = (theard_args *) arg;
   quicksort(node->array, node->lo, node->hi);
+  printf("Done!\n");
   pthread_mutex_lock(&num_workers);
   current_workers--;
   pthread_mutex_unlock(&num_workers);
