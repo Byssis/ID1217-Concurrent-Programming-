@@ -33,7 +33,6 @@ void * co_quicksort(void * arg);
   int hi        higher bound of sub array of array to be sorted
 */
 void quicksort(int array[], int lo, int hi){
-  printf("lo: %d, hi: %d\n", lo, hi);
   pthread_t tidl, tidr;
   int l = 0;
   int r = 0;
