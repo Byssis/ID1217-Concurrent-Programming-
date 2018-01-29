@@ -33,7 +33,7 @@ void * co_quicksort(void * arg);
   int hi        higher bound of sub array of array to be sorted
 */
 void quicksort(int array[], int lo, int hi){
-  printf("Hej\n");
+  printf("lo: %d, hi: %d\n", lo, hi);
 
   pthread_t tidl, tidr;
   if(lo >= hi) return;                        // Base case for recursion
@@ -78,8 +78,6 @@ void quicksort(int array[], int lo, int hi){
 */
 void * co_quicksort(void * arg){
   theard_args * node = (theard_args *) arg;
-  printf("Hej!\n");
-
   quicksort(node->array, node->lo, node->hi);
   pthread_mutex_lock(&num_workers);
   current_workers--;
@@ -116,6 +114,7 @@ int main(int argc, char *argv[]){
     array[i]= rand() % 99;
   double start_time = read_timer();
   quicksort(array, 0, size-1);
+  printf("Done!\n");
   double end_time = read_timer();
   /*for (i = 0; i < ARRAY_SIZE-1; i++) {
     printf("%d, ", array[i]);
