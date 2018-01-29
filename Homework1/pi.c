@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#define ERROR 1000
+#define ERROR 0.0001;
 
 double fun(double x){
   double result;
@@ -20,7 +20,7 @@ double quad(double l, double r, double fl, double fr, double area){
   fm = fun(m);
   larea = ( fl + fm ) * ( m - l ) / 2;
   rarea = ( fl + fr ) * ( r - m ) / 2;
-  if(i++ < ERROR){
+  if(abs((larea + rarea) - area)*1000 > ERROR){
     larea = quad(l, m, fl, fm, larea);
     rarea = quad(m, r, fm, fr, rarea);
   }
