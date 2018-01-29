@@ -15,12 +15,13 @@ double fun(double x){
 int i = 0;
 
 double quad(double l, double r, double fl, double fr, double area){
-  double m, fm, larea, rarea;
+  double m, fm, larea, rarea, a;
   m = ( l + r ) / 2;
   fm = fun(m);
   larea = ( fl + fm ) * ( m - l ) / 2;
   rarea = ( fl + fr ) * ( r - m ) / 2;
-  printf("%f\n", abs((larea + rarea) - area));
+  a = abs((larea + rarea) - area);
+  printf("%f\n", a);
   if(abs((larea + rarea) - area) > ERROR){
     larea = quad(l, m, fl, fm, larea);
     rarea = quad(m, r, fm, fr, rarea);
