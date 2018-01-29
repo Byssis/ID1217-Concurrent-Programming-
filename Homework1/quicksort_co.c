@@ -4,13 +4,18 @@
 #include "bench.h"
 
 #define MAXSIZE 100000
-#define MIN_SIZE 10
+#define MAXWORKERS 10
 
 typedef struct node {
 int* array;
 int lo;
 int hi;
 } theard_args;
+
+pthread_mutex_t num_workers;
+int current_workers = 0
+int max_workers;
+
 
 // Function delcaretion of co_quicksort
 void * co_quicksort(void * arg);
@@ -28,22 +33,40 @@ void * co_quicksort(void * arg);
   int hi        higher bound of sub array of array to be sorted
 */
 void quicksort(int array[], int lo, int hi){
+  pthread_t tidl, tidr;
   if(lo >= hi) return;                        // Base case for recursion
   int p = partition(array, lo, hi);           // Get pivot element
-  if(hi-lo > MIN_SIZE){                       // Decide if to create a new thread
+  pthread_mutex_lock(&num_workers);
+  if(current_workers < max_workers){                       // Decide if to create a new thread
+    current_workers++;
+    pthread_mutex_unlock(&num_workers);
     theard_args n1;                           // args to new thread
     n1.array = array;                         // pointer to array
     n1.lo = lo;                               // lower bound
     n1.hi = p-1;                              // Higher bound
-    pthread_t tid;                            // to hold id to thread
-    pthread_create(&tid, NULL, co_quicksort, &n1);  // new thread
-    quicksort(array, p+1, hi);                // continue in this thread
-    pthread_join(tid, NULL);                  // wait for thread to finnish
+    pthread_create(&tidl, NULL, co_quicksort, &n1);  // new thread
   }
   else {
+    pthread_mutex_unlock(&num_workers);
     quicksort(array, lo, p-1);                // normal quicksort
+  }
+
+  pthread_mutex_lock(&num_workers);
+  if(current_workers < max_workers){                       // Decide if to create a new thread
+    current_workers++;
+    pthread_mutex_unlock(&num_workers);
+    theard_args n1;                           // args to new thread
+    n1.array = array;                         // pointer to array
+    n1.lo = p+1;                               // lower bound
+    n1.hi = hi;                              // Higher bound
+    pthread_create(&tidr, NULL, co_quicksort, &n1);  // new thread
+  }
+  else {
+    pthread_mutex_unlock(&num_workers);
     quicksort(array, p+1, hi);
   }
+  pthread_join(tidl, NULL);
+  pthread_join(tidr, NULL);
 }
 
 /*
@@ -52,11 +75,14 @@ void quicksort(int array[], int lo, int hi){
 void * co_quicksort(void * arg){
   theard_args * node = (theard_args *) arg;
   quicksort(node->array, node->lo, node->hi);
+  pthread_mutex_lock(&num_workers);
+  current_workers--;
+  pthread_mutex_unlock(&num_workers);
 }
 
 int partition(int array[], int lo, int hi){
   int p = array[hi];
-  int i = lo - 1;
+  int i   = lo - 1;
   int j;
   for (j = lo; j < hi; j++){
     if( array [j] < p)
@@ -75,6 +101,8 @@ int swap(int array[], int p1, int p2 ){
 
 int main(int argc, char *argv[]){
   int size = (argc > 1)? atoi(argv[1]) : MAXSIZE;
+  max_workers = (argc > 2) ? atoi(argv[2]) : MAXWORKERS;
+  
   int i;
   int array[size];
   for (i = 0; i < size; i++)
