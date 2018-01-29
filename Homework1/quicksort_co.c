@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include "bench.h"
 
-#define ARRAY_SIZE 10000000
+#define ARRAY_SIZE 100000
 #define MIN_SIZE 10
 
 int array [ARRAY_SIZE];
