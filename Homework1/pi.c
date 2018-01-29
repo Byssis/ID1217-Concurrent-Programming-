@@ -30,6 +30,6 @@ int main() {
   fb = fun(b);
   area = ( fa + fb ) * ( fb - fa ) / 2;
   result = quad(a, b, fa, fb, area);
-  printf("%d\n", result);
+  printf("%f\n", result);
   return 0;
 }
