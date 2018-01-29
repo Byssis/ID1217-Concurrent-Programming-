@@ -12,6 +12,11 @@ double fun(double x){
   return result;
 }
 
+double dabs(double x){
+  if(x > 0.0) return x;
+  else return x * 1.0;
+}
+
 int i = 0;
 
 double quad(double l, double r, double fl, double fr, double area){
@@ -20,9 +25,9 @@ double quad(double l, double r, double fl, double fr, double area){
   fm = fun(m);
   larea = ( fl + fm ) * ( m - l ) / 2;
   rarea = ( fl + fr ) * ( r - m ) / 2;
-  a = abs((larea + rarea) - area);
+  a = dabs((larea + rarea) - area);
   printf("%f\n", a);
-  if(abs((larea + rarea) - area) > ERROR){
+  if(dabs((larea + rarea) - area) > ERROR){
     larea = quad(l, m, fl, fm, larea);
     rarea = quad(m, r, fm, fr, rarea);
   }
