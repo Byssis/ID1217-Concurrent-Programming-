@@ -75,7 +75,7 @@ void quicksort(int array[], int lo, int hi){
 void * co_quicksort(void * arg){
   theard_args * node = (theard_args *) arg;
   printf("Hej!\n");
-  
+
   quicksort(node->array, node->lo, node->hi);
   pthread_mutex_lock(&num_workers);
   current_workers--;
@@ -104,12 +104,14 @@ int swap(int array[], int p1, int p2 ){
 int main(int argc, char *argv[]){
   int size = (argc > 1)? atoi(argv[1]) : MAXSIZE;
   max_workers = (argc > 2) ? atoi(argv[2]) : MAXWORKERS;
-  printf("Size: %d\n, ", size);
-  printf("Workers: %d\n, ", max_workers);
+  printf("Size: %d\n", size);
+  printf("Workers: %d\n", max_workers);
   int i;
   int array[size];
   for (i = 0; i < size; i++)
     array[i]= rand() % 99;
+  printf("Size: %d\n", size);
+  printf("Workers: %d\n", max_workers);
   double start_time = read_timer();
   quicksort(array, 0, size-1);
   double end_time = read_timer();
