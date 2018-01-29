@@ -102,7 +102,8 @@ int swap(int array[], int p1, int p2 ){
 int main(int argc, char *argv[]){
   int size = (argc > 1)? atoi(argv[1]) : MAXSIZE;
   max_workers = (argc > 2) ? atoi(argv[2]) : MAXWORKERS;
-
+  printf("Size: %d\n, ", size);
+  printf("Workers: %d\n, ", max_workers);
   int i;
   int array[size];
   for (i = 0; i < size; i++)
