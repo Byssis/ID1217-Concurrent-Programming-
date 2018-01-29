@@ -13,7 +13,7 @@ int hi;
 } theard_args;
 
 pthread_mutex_t num_workers;
-int current_workers = 0
+int current_workers = 0;
 int max_workers;
 
 
@@ -102,7 +102,7 @@ int swap(int array[], int p1, int p2 ){
 int main(int argc, char *argv[]){
   int size = (argc > 1)? atoi(argv[1]) : MAXSIZE;
   max_workers = (argc > 2) ? atoi(argv[2]) : MAXWORKERS;
-  
+
   int i;
   int array[size];
   for (i = 0; i < size; i++)
