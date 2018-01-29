@@ -42,7 +42,6 @@ void quicksort(int array[], int lo, int hi){
   pthread_mutex_lock(&num_workers);
   if(current_workers < max_workers){                       // Decide if to create a new thread
     current_workers++;
-    printf("%d\n", current_workers);
     pthread_mutex_unlock(&num_workers);
     theard_args n1;                           // args to new thread
     n1.array = array;                         // pointer to array
@@ -59,7 +58,6 @@ void quicksort(int array[], int lo, int hi){
   pthread_mutex_lock(&num_workers);
   if(current_workers < max_workers){                       // Decide if to create a new thread
     current_workers++;
-    printf("%d\n", current_workers);
     pthread_mutex_unlock(&num_workers);
     theard_args n1;                           // args to new thread
     n1.array = array;                         // pointer to array
@@ -83,7 +81,6 @@ void quicksort(int array[], int lo, int hi){
 void * co_quicksort(void * arg){
   theard_args * node = (theard_args *) arg;
   quicksort(node->array, node->lo, node->hi);
-  printf("Done!\n");
   pthread_mutex_lock(&num_workers);
   current_workers--;
   pthread_mutex_unlock(&num_workers);
@@ -111,15 +108,12 @@ int swap(int array[], int p1, int p2 ){
 int main(int argc, char *argv[]){
   int size = (argc > 1)? atoi(argv[1]) : MAXSIZE;
   max_workers = (argc > 2) ? atoi(argv[2]) : MAXWORKERS;
-  printf("Size: %d\n", size);
-  printf("Workers: %d\n", max_workers);
   int i;
   int array[size];
   for (i = 0; i < size; i++)
     array[i]= rand() % 99;
   double start_time = read_timer();
   quicksort(array, 0, size-1);
-  printf("Done!\n");
   double end_time = read_timer();
   /*for (i = 0; i < ARRAY_SIZE-1; i++) {
     printf("%d, ", array[i]);
