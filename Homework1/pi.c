@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#define ERROR 100000
+#define ERROR 1000
 
 double fun(double x){
   double result;
