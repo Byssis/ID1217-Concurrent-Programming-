@@ -29,7 +29,7 @@ int swap(int array[], int p1, int p2 ){
   array[p1] = temp;
 }
 
-int main(){
+int main(int argc, char *argv[]){
   int size = (argc > 1)? atoi(argv[1]) : MAXSIZE;
   int i;
   for (i = 0; i < ARRAY_SIZE-1; i++)
