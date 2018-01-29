@@ -98,7 +98,7 @@ int main(int argc, char *argv[]){
   while(fscanf(file,"%s",dictionary[k++]) == 1);
   fclose(file);
   size = k + 1;
-
+  printf("Size: %d\n", size);
   int numWorkers =  MAXWORKERS;
   pthread_t workerid[numWorkers];
 
