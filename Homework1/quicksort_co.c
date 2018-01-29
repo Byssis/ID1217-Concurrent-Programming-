@@ -35,6 +35,8 @@ void * co_quicksort(void * arg);
 void quicksort(int array[], int lo, int hi){
   printf("lo: %d, hi: %d\n", lo, hi);
   pthread_t tidl, tidr;
+  int l = 0;
+  int r = 0;
   if(lo >= hi) return;                        // Base case for recursion
   int p = partition(array, lo, hi);           // Get pivot element
   pthread_mutex_lock(&num_workers);
@@ -47,6 +49,7 @@ void quicksort(int array[], int lo, int hi){
     n1.lo = lo;                               // lower bound
     n1.hi = p-1;                              // Higher bound
     pthread_create(&tidl, NULL, co_quicksort, &n1);  // new thread
+    l = 1;
   }
   else {
     pthread_mutex_unlock(&num_workers);
@@ -63,13 +66,15 @@ void quicksort(int array[], int lo, int hi){
     n1.lo = p+1;                               // lower bound
     n1.hi = hi;                              // Higher bound
     pthread_create(&tidr, NULL, co_quicksort, &n1);  // new thread
+    r = 1;
   }
   else {
     pthread_mutex_unlock(&num_workers);
     quicksort(array, p+1, hi);
   }
-  pthread_join(tidl, NULL);
-  pthread_join(tidr, NULL);
+  if(l)pthread_join(tidl, NULL);
+  if(r)pthread_join(tidr, NULL);
+
 }
 
 /*
