@@ -74,6 +74,8 @@ void quicksort(int array[], int lo, int hi){
 */
 void * co_quicksort(void * arg){
   theard_args * node = (theard_args *) arg;
+  printf("Hej!\n");
+  
   quicksort(node->array, node->lo, node->hi);
   pthread_mutex_lock(&num_workers);
   current_workers--;
