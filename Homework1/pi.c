@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#define ERROR 1
+#define ERROR 0.000000001
 
 double fun(double x){
   double result;
