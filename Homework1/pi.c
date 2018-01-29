@@ -4,6 +4,8 @@
 #include <math.h>
 #include "bench.h"
 
+#define FACTOR 100000.0
+
 pthread_mutex_t lock;
 
 double error;
@@ -11,7 +13,8 @@ int num_workers;
 
 double fun(double x){
   double result;
-  result = 1.0 - x*x;
+  x = x * FACTOR;
+  result = FACTOR - x*x;
   result = sqrt( result );
   return result;
 }
@@ -25,10 +28,10 @@ int i = 0;
 
 double quad(double l, double r, double fl, double fr, double area){
   double m, fm, larea, rarea, a;
-  m = ( l + r ) / 2;
+  m = ( l + r ) / 2.0;
   fm = fun(m);
-  larea = ( fl + fm ) * ( m - l ) / 2;
-  rarea = ( fl + fr ) * ( r - m ) / 2;
+  larea = ( fl + fm ) * ( m - l ) / 2.0;
+  rarea = ( fl + fr ) * ( r - m ) / 2.0;
   a = dabs((larea + rarea) - area);
   if(dabs((larea + rarea) - area) > error){
     larea = quad(l, m, fl, fm, larea);
@@ -41,11 +44,11 @@ int main(int argc, char *argv[]) {
   double a, b, area, fa, fb,result, start_time, end_time;
   error = 0.00000001;//(double)atoi(argv[1]);
   start_time = read_timer();
-  a = 0;
-  b = 1;
+  a = 0.0 * FACTOR;
+  b = 1.0 * FACTOR;
   fa = fun(a);
   fb = fun(b);
-  area = ( fa + fb ) * ( fb - fa ) / 2;
+  area = ( fa + fb ) * ( fb - fa ) / 2.0;
   result = 4 * quad(a, b, fa, fb, area);
   end_time = read_timer();
   printf("%f\n", result);
