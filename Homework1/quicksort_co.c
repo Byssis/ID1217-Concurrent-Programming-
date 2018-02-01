@@ -107,11 +107,11 @@ int swap(int array[], int p1, int p2 ){
 
 int main(int argc, char *argv[]){
   int size = (argc > 1)? atoi(argv[1]) : MAXSIZE;
-  max_workers = (argc > 2) ? atoi(argv[2]) : MAXWORKERS;
+  int max = (argc > 2) ? atoi(argv[2]) : MAXWORKERS;
   int i;
   int j;
 
-  for (j = 1; j < max_workers; j = j * 2) {
+  for (j = 1; j < max; j = j * 2) {
     max_workers = j;
     int array[size];
     for (i = 0; i < size; i++)
