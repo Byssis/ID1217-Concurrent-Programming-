@@ -16,9 +16,9 @@ finding palindromic words in a dictionary using pthreads
 #include <string.h>
 #include "bench.h"
 
-#define MAXWORKERS 96
+#define MAXWORKERS 128
 #define WORDLENGTH 40
-#define TASKLENGTH 10
+#define TASKLENGTH 100
 #define MAXSIZE 30000
 pthread_mutex_t word_index_lock;
 pthread_mutex_t sum_lock;
@@ -132,6 +132,6 @@ int main(int argc, char *argv[]){
 
     end_time = read_timer();
 
-    printf("Num threads: %d.The execution time is %g sec. Num words: %d\n", i, end_time - start_time, sum);
+    printf("Num threads: %d. The execution time is %g sec. Num words: %d\n", i, end_time - start_time, sum);
   }
 }
