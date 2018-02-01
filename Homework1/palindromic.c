@@ -131,6 +131,6 @@ int main(int argc, char *argv[]){
 
     end_time = read_timer();
 
-    printf("Num threads: %d.The execution time is %g sec\n", i, end_time - start_time);
+    printf("Num threads: %d.The execution time is %g sec. Num words: %d\n", i, end_time - start_time, sum);
   }
 }
