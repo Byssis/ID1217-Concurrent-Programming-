@@ -109,17 +109,22 @@ int main(int argc, char *argv[]){
   int size = (argc > 1)? atoi(argv[1]) : MAXSIZE;
   max_workers = (argc > 2) ? atoi(argv[2]) : MAXWORKERS;
   int i;
-  int array[size];
-  for (i = 0; i < size; i++)
-    array[i]= rand() % 99;
-  double start_time = read_timer();
-  quicksort(array, 0, size-1);
-  double end_time = read_timer();
-  if(ifsorted(array, size)){
-    printf("Array sorted\n");
+  int j;
+
+  for (j = 0; j < MAXWORKERS; j = j *2) {
+    max_workers = j;
+    int array[size];
+    for (i = 0; i < size; i++)
+      array[i]= rand() % 99;
+    double start_time = read_timer();
+    quicksort(array, 0, size-1);
+    double end_time = read_timer();
+    if(ifsorted(array, size)){
+      printf("Array sorted\n");
+    }
+    else {
+      printf("Error\n");
+    }
+    printf("Threads: %d. The execution time is %g sec\n", j, end_time - start_time);
   }
-  else {
-    printf("Error\n");
-  }
-  printf("The execution time is %g sec\n", end_time - start_time);
 }
