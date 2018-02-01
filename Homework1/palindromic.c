@@ -16,7 +16,7 @@ finding palindromic words in a dictionary using pthreads
 #include <string.h>
 #include "bench.h"
 
-#define MAXWORKERS 32
+#define MAXWORKERS 96
 #define WORDLENGTH 40
 #define TASKLENGTH 10
 #define MAXSIZE 30000
