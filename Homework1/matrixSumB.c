@@ -44,7 +44,7 @@ void UpdateMax(int value, int i, int j){
 
 void UpdateMin(int value, int i, int j){
   pthread_mutex_lock(&min);
-  if(value < minValue){
+  if(value <= minValue){
     minValue = value;
     minI = i;
     minJ = j;
@@ -126,7 +126,6 @@ int main(int argc, char *argv[]) {
 
   for (l = 0; l < numWorkers; l++){
     pthread_join(workerid[l],NULL);
-    printf("%d\n", l);
   }
 
   end_time = read_timer();

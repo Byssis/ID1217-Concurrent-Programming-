@@ -16,7 +16,7 @@ finding palindromic words in a dictionary using pthreads
 #include <string.h>
 #include "bench.h"
 
-#define MAXWORKERS 5
+#define MAXWORKERS 32
 #define WORDLENGTH 40
 #define TASKLENGTH 10
 #define MAXSIZE 30000
@@ -80,8 +80,8 @@ void * Worker(void * args){
       int result = binarySearch(0, size, flip);
       //printf("binarySearch: %d \n", result);
       // 4. print if
-      if(result != -1)
-        printf("%s %s\n", word, flip);
+      //if(result != -1)
+        //printf("%s %s\n", word, flip);
 
       //printf("\n");
     }
@@ -109,18 +109,22 @@ int main(int argc, char *argv[]){
   }
   fclose(file);
   size = k - 1;
-  //printf("Size: %d\n", size);
-  pthread_t workerid[numWorkers];
+  int i;
+  for (i = 1; i <= MAXWORKERS; i = i * 2) {
+    word_index = 0;
+    //printf("Size: %d\n", size);
+    pthread_t workerid[i];
 
-  start_time = read_timer();                  // Start time for benchmark
+    start_time = read_timer();                  // Start time for benchmark
 
-  for (l = 0; l < numWorkers; l++)
-    pthread_create(&workerid[l], NULL, Worker, &size);
+    for (l = 0; l < i; l++)
+      pthread_create(&workerid[l], NULL, Worker, &size);
 
-  for (l = 0; l < numWorkers; l++)
-    pthread_join(workerid[l],NULL);
+    for (l = 0; l < i; l++)
+      pthread_join(workerid[l],NULL);
 
-  end_time = read_timer();
+    end_time = read_timer();
 
-  printf("The execution time is %g sec\n", end_time - start_time);
+    printf("Num threads: %d.The execution time is %g sec\n", i, end_time - start_time);
+  }
 }
