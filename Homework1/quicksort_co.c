@@ -111,7 +111,7 @@ int main(int argc, char *argv[]){
   int i;
   int j;
 
-  for (j = 1; j < MAXWORKERS; j = j + 2) {
+  for (j = 1; j < MAXWORKERS; j = j * 2) {
     max_workers = j;
     int array[size];
     for (i = 0; i < size; i++)
