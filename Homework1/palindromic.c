@@ -21,9 +21,10 @@ finding palindromic words in a dictionary using pthreads
 #define TASKLENGTH 10
 #define MAXSIZE 30000
 pthread_mutex_t word_index_lock;
+pthread_mutex_t sum_lock;
 
 int word_index = 0;
-
+int sum = 0;
 char dictionary[MAXSIZE][WORDLENGTH];
 
 int getIndex(){
@@ -62,7 +63,7 @@ int binarySearch(int l, int r, char * x){
 
 void * Worker(void * args){
   int size = *((int *)args);
-
+  int partial_sum = 0;
   while (true) {
     // 1. Get word from bag
     int i = getIndex();
@@ -80,12 +81,17 @@ void * Worker(void * args){
       int result = binarySearch(0, size, flip);
       //printf("binarySearch: %d \n", result);
       // 4. print if
-      //if(result != -1)
-        //printf("%s %s\n", word, flip);
+      if(result != -1){        //printf("%s %s\n", word, flip);
+        partial_sum++;
+        //printf("\n");
+      }
 
-      //printf("\n");
     }
   }
+
+  pthread_mutex_lock(&sum_lock);
+  sum += partial_sum;
+  pthread_mutex_unlock(&sum_lock);
 }
 
 int main(int argc, char *argv[]){
