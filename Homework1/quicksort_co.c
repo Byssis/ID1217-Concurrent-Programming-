@@ -14,7 +14,7 @@ int hi;
 } theard_args;
 
 pthread_mutex_t num_workers;
-int current_workers = 0;
+int current_workers = 1;
 int max_workers;
 
 
@@ -111,7 +111,7 @@ int main(int argc, char *argv[]){
   int i;
   int j;
 
-  for (j = 0; j < MAXWORKERS; j = j *2) {
+  for (j = 1; j < MAXWORKERS; j = j + 2) {
     max_workers = j;
     int array[size];
     for (i = 0; i < size; i++)
