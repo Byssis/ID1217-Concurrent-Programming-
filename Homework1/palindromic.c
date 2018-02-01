@@ -117,6 +117,7 @@ int main(int argc, char *argv[]){
   size = k - 1;
   int i;
   for (i = 1; i <= MAXWORKERS; i = i * 2) {
+    sum = 0;
     word_index = 0;
     //printf("Size: %d\n", size);
     pthread_t workerid[i];
