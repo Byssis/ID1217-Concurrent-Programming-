@@ -68,7 +68,7 @@ int binarySearch(int l, int r, char * x){
 }
 
 void * Worker(void * args){
-  long myid = (int) args;
+  long myid = (long) args;
   int partial_sum = 0;
 
 
@@ -107,7 +107,8 @@ void * Worker(void * args){
 
 int main(int argc, char *argv[]){
   double start_time, end_time;
-  int k = 0, i, l, numWorkers;
+  int k = 0, i, numWorkers;
+  long l;
 
   if(argc < 3){
     printf("Error! Argument missing: file to examine\n");
