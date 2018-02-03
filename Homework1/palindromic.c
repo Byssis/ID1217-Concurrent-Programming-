@@ -135,7 +135,7 @@ int main(int argc, char *argv[]){
     start_time = read_timer();                  // Start time for benchmark
 
     for (l = 0; l < i; l++)
-      pthread_create(&workerid[l], NULL, Worker, l);
+      pthread_create(&workerid[l], NULL, Worker, (void *)l);
 
     for (l = 0; l < i; l++)
       pthread_join(workerid[l], NULL);
