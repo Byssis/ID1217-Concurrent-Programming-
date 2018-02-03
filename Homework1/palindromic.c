@@ -105,7 +105,7 @@ void * Worker(void * args){
 int main(int argc, char *argv[]){
   double start_time, end_time;
   int k = 0, i, l, size, numWorkers;
-  FILE* file;
+
   char const* const fileName;
 
   if(argc < 3){
@@ -115,7 +115,7 @@ int main(int argc, char *argv[]){
   numWorkers = (argc > 1)? atoi(argv[1]) : MAXWORKERS;
   fileName = argv[2];
 
-  file = fopen(fileName, "r");
+  FILE* file = fopen(fileName, "r");
   while(fscanf(file,"%s",dictionary[k]) == 1){
     for(i= 0; dictionary[k][i]; i++){
         dictionary[k][i] = tolower(dictionary[k][i]);
