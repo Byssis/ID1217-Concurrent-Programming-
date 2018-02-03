@@ -28,14 +28,19 @@ int sum = 0;
 char dictionary[MAXSIZE][WORDLENGTH];
 
 int getIndex(){
-  int i;
-  pthread_mutex_lock(&word_index_lock);
-  i = word_index;
-  word_index += TASKLENGTH;
-  pthread_mutex_unlock(&word_index_lock);
+  int i;                                      // Temp variable to store index
+  pthread_mutex_lock(&word_index_lock);       // Start Critical section
+  i = word_index;                             // Store to temp variable
+  word_index += TASKLENGTH;                   //
+  pthread_mutex_unlock(&word_index_lock);     // End Critical section
   return i;
 }
 
+/*
+    reverse string
+    arg word word to reverse
+
+*/
 void reverse(char * word, char * r){
   int i, j;
   i = 0;
@@ -64,6 +69,8 @@ int binarySearch(int l, int r, char * x){
 void * Worker(void * args){
   int size = *((int *)args);
   int partial_sum = 0;
+
+
   while (true) {
     // 1. Get word from bag
     int i = getIndex();
@@ -79,10 +86,11 @@ void * Worker(void * args){
 
       // 3. search for word in word array
       int result = binarySearch(0, size, flip);
-      //printf("binarySearch: %d \n", result);
+
       // 4. print if
       if(result != -1){        //printf("%s %s\n", word, flip);
         partial_sum++;
+        //printf("%s %s\n", word, flip);
         //printf("\n");
       }
 
@@ -96,18 +104,19 @@ void * Worker(void * args){
 
 int main(int argc, char *argv[]){
   double start_time, end_time;
-  int k = 0, l, size;
-  int numWorkers;
+  int k = 0, i, l, size, numWorkers;
+  FILE* file;
+  char const* const fileName;
+
   if(argc < 3){
     printf("Error! Argument missing: file to examine\n");
     exit(0);
   }
   numWorkers = (argc > 1)? atoi(argv[1]) : MAXWORKERS;
-  char const* const fileName = argv[2];
+  fileName = argv[2];
 
-  FILE* file = fopen(fileName, "r");
+  file = fopen(fileName, "r");
   while(fscanf(file,"%s",dictionary[k]) == 1){
-    int i;
     for(i= 0; dictionary[k][i]; i++){
         dictionary[k][i] = tolower(dictionary[k][i]);
     }
@@ -115,7 +124,7 @@ int main(int argc, char *argv[]){
   }
   fclose(file);
   size = k - 1;
-  int i;
+
   for (i = 1; i <= MAXWORKERS; i = i * 2) {
     sum = 0;
     word_index = 0;
@@ -128,7 +137,7 @@ int main(int argc, char *argv[]){
       pthread_create(&workerid[l], NULL, Worker, &size);
 
     for (l = 0; l < i; l++)
-      pthread_join(workerid[l],NULL);
+      pthread_join(workerid[l], NULL);
 
     end_time = read_timer();
 
