@@ -106,8 +106,6 @@ int main(int argc, char *argv[]){
   double start_time, end_time;
   int k = 0, i, l, size, numWorkers;
 
-  char const* const fileName;
-
   if(argc < 3){
     printf("Error! Argument missing: file to examine\n");
     exit(0);
