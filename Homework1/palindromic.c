@@ -16,7 +16,7 @@ finding palindromic words in a dictionary using pthreads
 #include <string.h>
 #include "bench.h"
 
-#define MAXWORKERS 128
+#define MAXWORKERS 25
 #define WORDLENGTH 40
 #define TASKLENGTH 100
 #define MAXSIZE 30000
@@ -40,7 +40,6 @@ int getIndex(){
 /*
     reverse string
     arg word word to reverse
-
 */
 void reverse(char * word, char * r){
   int i, j;
@@ -127,7 +126,7 @@ int main(int argc, char *argv[]){
   fclose(file);
   size = k - 1;
 
-  for (i = 1; i <= MAXWORKERS; i = i * 2) {
+  for (i = 1; i <= MAXWORKERS; i = i + 4) {
     sum = 0;
     word_index = 0;
     //printf("Size: %d\n", size);
