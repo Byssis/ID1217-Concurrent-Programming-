@@ -25,6 +25,7 @@ pthread_mutex_t sum_lock;
 
 int word_index = 0;
 int sum = 0;
+int size;
 char dictionary[MAXSIZE][WORDLENGTH];
 
 int getIndex(){
@@ -67,7 +68,7 @@ int binarySearch(int l, int r, char * x){
 }
 
 void * Worker(void * args){
-  int size = *((int *)args);
+  long myid = (int) arg;
   int partial_sum = 0;
 
 
@@ -92,11 +93,13 @@ void * Worker(void * args){
         partial_sum++;
         //printf("%s %s\n", word, flip);
         //printf("\n");
+
+        // Print to file
       }
 
     }
   }
-
+  printf("Worker %d found: %d\n", myid, partial_sum);
   pthread_mutex_lock(&sum_lock);
   sum += partial_sum;
   pthread_mutex_unlock(&sum_lock);
@@ -104,7 +107,7 @@ void * Worker(void * args){
 
 int main(int argc, char *argv[]){
   double start_time, end_time;
-  int k = 0, i, l, size, numWorkers;
+  int k = 0, i, l, numWorkers;
 
   if(argc < 3){
     printf("Error! Argument missing: file to examine\n");
@@ -132,7 +135,7 @@ int main(int argc, char *argv[]){
     start_time = read_timer();                  // Start time for benchmark
 
     for (l = 0; l < i; l++)
-      pthread_create(&workerid[l], NULL, Worker, &size);
+      pthread_create(&workerid[l], NULL, Worker, &l);
 
     for (l = 0; l < i; l++)
       pthread_join(workerid[l], NULL);
