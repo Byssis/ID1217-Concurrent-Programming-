@@ -113,7 +113,7 @@ int main(int argc, char *argv[]){
     exit(0);
   }
   numWorkers = (argc > 1)? atoi(argv[1]) : MAXWORKERS;
-  fileName = argv[2];
+  char const* const fileName = argv[2];
 
   FILE* file = fopen(fileName, "r");
   while(fscanf(file,"%s",dictionary[k]) == 1){
