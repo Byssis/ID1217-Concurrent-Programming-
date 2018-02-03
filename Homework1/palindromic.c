@@ -68,7 +68,7 @@ int binarySearch(int l, int r, char * x){
 }
 
 void * Worker(void * args){
-  long myid = (int) arg;
+  long myid = (int) args;
   int partial_sum = 0;
 
 
