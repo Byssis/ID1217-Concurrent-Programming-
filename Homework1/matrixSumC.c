@@ -30,8 +30,8 @@ pthread_cond_t go;        /* condition variable for leaving */
 int numWorkers;           /* number of workers */
 int numArrived = 0;       /* number who have arrived */
 
-int maxValue, maxI, maxJ;
-int minValue, minI, minJ;
+int maxValue, maxI = 0, maxJ = 0;
+int minValue, minI = 0, minJ = 0;
 int sumValue;
 
 int row = 0;
@@ -107,7 +107,7 @@ int main(int argc, char *argv[]) {
   /* initialize the matrix */
   for (i = 0; i < size; i++) {
 	  for (j = 0; j < size; j++) {
-      matrix[i][j] = rand()%99;
+      matrix[i][j] = rand()%9999 + 2;
 	  }
   }
 
