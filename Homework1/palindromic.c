@@ -155,7 +155,6 @@ int main(int argc, char *argv[]){
   pthread_t workerid[i];
 
   start_time = read_timer();                  // Start time for benchmark
-    printf("Hej!\n");
   // Spawn workers
   for (l = 0; l < i; l++)
     pthread_create(&workerid[l], NULL, Worker, (void *)l);
