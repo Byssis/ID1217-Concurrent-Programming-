@@ -16,7 +16,7 @@ finding palindromic words in a dictionary using pthreads
 #include <string.h>
 #include "bench.h"
 
-#define MAXWORKERS 24
+#define MAXWORKERS 33
 #define WORDLENGTH 40
 #define TASKLENGTH 10
 #define MAXSIZE 30000
@@ -108,7 +108,7 @@ void * Worker(void * args){
       // 4. print if in dictionary
       if(result != -1){
         partial_sum++;
-        printf("%s %s\n", word, flip);
+        //printf("%s %s\n", word, flip);
       }
     }
   }
@@ -117,7 +117,7 @@ void * Worker(void * args){
   pthread_mutex_unlock(&sum_lock);              // Exits Critical section
 
   Barrier();                                    // Wait for other threads to finnish
-  printf("Worker %d found: %d\n", myid, partial_sum);
+  //printf("Worker %d found: %d\n", myid, partial_sum);
 }
 
 int main(int argc, char *argv[]){
@@ -147,8 +147,8 @@ int main(int argc, char *argv[]){
   fclose(file);
   size = k - 1;
 
-  //for (i = 1; i <= MAXWORKERS; i = i + 4) {
-  i = numWorkers;
+  for (i = 1; i <= MAXWORKERS; i = i*2) {
+  //i = numWorkers;
   sum = 0;
   word_index = 0;
   //printf("Size: %d\n", size);
@@ -169,5 +169,5 @@ int main(int argc, char *argv[]){
   // Print execution time
   printf("Num threads: %d. The execution time is %g sec. Num words: %d\n"
           , i, end_time - start_time, sum);
-  //}
+  }
 }
