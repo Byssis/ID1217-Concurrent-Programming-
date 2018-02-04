@@ -121,7 +121,8 @@ int main(int argc, char *argv[]){
   fclose(file);
   size = k - 1;
 
-  for (i = 1; i <= MAXWORKERS; i = i + 4) {
+  //for (i = 1; i <= MAXWORKERS; i = i + 4) {
+    i = numWorkers;
     sum = 0;
     word_index = 0;
     //printf("Size: %d\n", size);
@@ -139,5 +140,5 @@ int main(int argc, char *argv[]){
 
     printf("Num threads: %d. The execution time is %g sec. Num words: %d\n"
             , i, end_time - start_time, sum);
-  }
+  //}
 }
