@@ -116,7 +116,7 @@ void * Worker(void * args){
   sum += partial_sum;                           // Updating sum
   pthread_mutex_unlock(&sum_lock);              // Exits Critical section
 
-  Barrier();                                    // Wait for other threads to finnish
+  //Barrier();                                    // Wait for other threads to finnish
   //printf("Worker %d found: %d\n", myid, partial_sum);
 }
 
@@ -126,8 +126,7 @@ int main(int argc, char *argv[]){
   long l;
 
   /* initialize mutex and condition variable */
-  pthread_mutex_init(&barrier, NULL);
-  pthread_cond_init(&go, NULL);
+
 
   if(argc < 3){
     printf("Error! Argument missing: file to examine\n");
@@ -148,8 +147,6 @@ int main(int argc, char *argv[]){
   size = k - 1;
 
   for (i = 1; i <= MAXWORKERS; i = i*2) {
-  pthread_mutex_init(&barrier, NULL);
-  pthread_cond_init(&go, NULL);
 
   //i = numWorkers;
   sum = 0;
