@@ -33,7 +33,7 @@ int numArrived = 0;       /* number who have arrived */
 int maxValue, maxI = 0, maxJ = 0;
 int minValue, minI = 0, minJ = 0;
 int sumValue;
-
+int first = 1;
 int row = 0;
 
 void UpdateMax(int value, int i, int j){
@@ -48,10 +48,11 @@ void UpdateMax(int value, int i, int j){
 
 void UpdateMin(int value, int i, int j){
   pthread_mutex_lock(&min);
-  if(value <= minValue){
+  if(value <= minValue || first){
     minValue = value;
     minI = i;
     minJ = j;
+    first = 0;
   }
   pthread_mutex_unlock(&min);
 }

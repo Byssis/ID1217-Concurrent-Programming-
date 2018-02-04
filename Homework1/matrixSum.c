@@ -43,10 +43,11 @@ void UpdateMax(int value, int i, int j){
 
 void UpdateMin(int value, int i, int j){
   pthread_mutex_lock(&min);
-  if(value < minValue){
+  if(value <= minValue || first){
     minValue = value;
     minI = i;
     minJ = j;
+    first = 0;
   }
   pthread_mutex_unlock(&min);
 }
