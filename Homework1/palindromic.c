@@ -70,7 +70,6 @@ int binarySearch(int l, int r, char * x){
 void * Worker(void * args){
   long myid = (long) args;
   int partial_sum = 0;
-a
   while (true) {
     // 1. Get word from bag
     int i = getIndex();
