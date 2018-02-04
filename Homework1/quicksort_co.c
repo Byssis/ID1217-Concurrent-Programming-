@@ -21,7 +21,7 @@ int max_workers;
 // Function delcaretion of co_quicksort
 void * co_quicksort(void * arg);
 
-void createThread(pthread_t* tid, array[], int lo, int hi){
+void createThread(pthread_t* tid, int array[], int lo, int hi){
   theard_args n1;                           // args to new thread
   n1.array = array;                         // pointer to array
   n1.lo = lo;                               // lower bound
