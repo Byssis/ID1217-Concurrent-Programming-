@@ -32,6 +32,9 @@ int numArrived = 0;       /* number who have arrived */
 int maxValue, maxI, maxJ;
 int minValue, minI, minJ;
 int sumValue;
+
+int first = 1;
+
 void UpdateMax(int value, int i, int j){
   pthread_mutex_lock(&max);
   if(value > maxValue){
