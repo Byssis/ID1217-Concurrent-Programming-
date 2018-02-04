@@ -6,7 +6,7 @@ finding palindromic words in a dictionary using pthreads
 
    usage under Linux:
      gcc -o palindromic palindromic.c -lpthread
-     palindromic fileName
+     palindromic fileName numWorkers > result.txt
 */
 
 #include <pthread.h>
@@ -16,7 +16,7 @@ finding palindromic words in a dictionary using pthreads
 #include <string.h>
 #include "bench.h"
 
-#define MAXWORKERS 25
+#define MAXWORKERS 24
 #define WORDLENGTH 40
 #define TASKLENGTH 10
 #define MAXSIZE 30000
@@ -40,7 +40,10 @@ int getIndex(){
   return i;
 }
 
-/* a reusable counter barrier */
+/*
+  a reusable counter barrier
+  Taken from matrixSum.c
+ */
 void Barrier() {
   pthread_mutex_lock(&barrier);
   numArrived++;
@@ -55,7 +58,7 @@ void Barrier() {
 
 /*
     reverse string
-    arg word word to reverse
+    char * word, string to reverse
 */
 void reverse(char * word, char * r){
   int i, j;
@@ -67,11 +70,13 @@ void reverse(char * word, char * r){
   r[i]  = '\0';
 }
 
+/*
+  binarySearch for searching in the dictionary
+*/
 int binarySearch(int l, int r, char * x){
   while (l <= r){
     int m = l + (r-l)/2;
     int result = (int)strcmp(x, dictionary[m]);
-    //printf("l: %d, r: %d, m: %d, word: %s, dic: %s, res: %d \n", l,r,m, x, dictionary[m], result);
     if (result == 0)
       return m;
     if (result > 0)
@@ -83,8 +88,8 @@ int binarySearch(int l, int r, char * x){
 }
 
 void * Worker(void * args){
-  long myid = (long) args;
-  int partial_sum = 0;
+  long myid = (long) args;                    // Id of worker
+  int partial_sum = 0;                        // Counter for numbers of words found
   while (true) {
     // 1. Get word from bag
     int i = getIndex();
@@ -96,22 +101,22 @@ void * Worker(void * args){
       char * word = dictionary[i + j];
       char flip[WORDLENGTH];
       reverse(word, flip);
-      //printf("Current word: %s, reverse: %s\n",word, flip);
 
-      // 3. search for word in word array
+      // 3. search for fliped word in dictionary
       int result = binarySearch(0, size, flip);
 
-      // 4. print if
-      if(result != -1){        //printf("%s %s\n", word, flip);
+      // 4. print if in dictionary
+      if(result != -1){
         partial_sum++;
         printf("%s %s\n", word, flip);
       }
     }
   }
-  pthread_mutex_lock(&sum_lock);
-  sum += partial_sum;
-  pthread_mutex_unlock(&sum_lock);
-  Barrier();
+  pthread_mutex_lock(&sum_lock);                // Enter Critical section
+  sum += partial_sum;                           // Updating sum
+  pthread_mutex_unlock(&sum_lock);              // Exits Critical section
+
+  Barrier();                                    // Wait for other threads to finnish
   printf("Worker %d found: %d\n", myid, partial_sum);
 }
 
@@ -128,9 +133,10 @@ int main(int argc, char *argv[]){
     printf("Error! Argument missing: file to examine\n");
     exit(0);
   }
-  numWorkers = (argc > 1)? atoi(argv[1]) : MAXWORKERS;
-  char const* const fileName = argv[2];
+  char const* const fileName = argv[1];
+  numWorkers = (argc > 2)? atoi(argv[2]) : MAXWORKERS;
 
+  // Read dictionary
   FILE* file = fopen(fileName, "r");
   while(fscanf(file,"%s",dictionary[k]) == 1){
     for(i= 0; dictionary[k][i]; i++){
@@ -142,23 +148,26 @@ int main(int argc, char *argv[]){
   size = k - 1;
 
   //for (i = 1; i <= MAXWORKERS; i = i + 4) {
-    i = numWorkers;
-    sum = 0;
-    word_index = 0;
-    //printf("Size: %d\n", size);
-    pthread_t workerid[i];
+  i = numWorkers;
+  sum = 0;
+  word_index = 0;
+  //printf("Size: %d\n", size);
+  pthread_t workerid[i];
 
-    start_time = read_timer();                  // Start time for benchmark
+  start_time = read_timer();                  // Start time for benchmark
 
-    for (l = 0; l < i; l++)
-      pthread_create(&workerid[l], NULL, Worker, (void *)l);
+  // Spawn workers
+  for (l = 0; l < i; l++)
+    pthread_create(&workerid[l], NULL, Worker, (void *)l);
 
-    for (l = 0; l < i; l++)
-      pthread_join(workerid[l], NULL);
+  // Wait for workers
+  for (l = 0; l < i; l++)
+    pthread_join(workerid[l], NULL);
 
-    end_time = read_timer();
+  end_time = read_timer();                    // End time for benchmark
 
-    printf("Num threads: %d. The execution time is %g sec. Num words: %d\n"
-            , i, end_time - start_time, sum);
+  // Print execution time
+  printf("Num threads: %d. The execution time is %g sec. Num words: %d\n"
+          , i, end_time - start_time, sum);
   //}
 }

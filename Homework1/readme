@@ -1,0 +1,8 @@
+finding palindromic words in a dictionary using pthreads
+
+   features: uses a number of worker(threads),
+      each worker get tasks from a bag of task(getIndex).
+
+   usage under Linux:
+     gcc -o palindromic.o palindromic.c -lpthread
+     ./palindromic.o fileName numWorkers > resultfile
