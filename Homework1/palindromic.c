@@ -23,10 +23,12 @@ finding palindromic words in a dictionary using pthreads
 
 pthread_mutex_t word_index_lock;
 pthread_mutex_t sum_lock;
+pthread_mutex_t barrier;  /* mutex lock for the barrier */
+pthread_cond_t go;
 
 int word_index = 0;
 int sum = 0;
-int size;
+int size, numArrived, numWorkers;
 char dictionary[MAXSIZE][WORDLENGTH];
 
 int getIndex(){
@@ -37,6 +39,19 @@ int getIndex(){
   pthread_mutex_unlock(&word_index_lock);     // End Critical section
   return i;
 }
+
+/* a reusable counter barrier */
+void Barrier() {
+  pthread_mutex_lock(&barrier);
+  numArrived++;
+  if (numArrived == numWorkers) {
+    numArrived = 0;
+    pthread_cond_broadcast(&go);
+  } else
+  pthread_cond_wait(&go, &barrier);
+  pthread_mutex_unlock(&barrier);
+}
+
 
 /*
     reverse string
@@ -96,13 +111,18 @@ void * Worker(void * args){
   pthread_mutex_lock(&sum_lock);
   sum += partial_sum;
   pthread_mutex_unlock(&sum_lock);
+  Barrier();
   printf("Worker %d found: %d\n", myid, partial_sum);
 }
 
 int main(int argc, char *argv[]){
   double start_time, end_time;
-  int k = 0, i, numWorkers;
+  int k = 0, i;
   long l;
+
+  /* initialize mutex and condition variable */
+  pthread_mutex_init(&barrier, NULL);
+  pthread_cond_init(&go, NULL);
 
   if(argc < 3){
     printf("Error! Argument missing: file to examine\n");
