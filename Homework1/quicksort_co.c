@@ -40,14 +40,10 @@ void quicksort(int array[], int lo, int hi){
   if(lo >= hi) return;                        // Base case for recursion
   int p = partition(array, lo, hi);           // Get pivot element
   pthread_mutex_lock(&num_workers);
-  if(current_workers < max_workers){                       // Decide if to create a new thread
+  if(current_workers < max_workers){          // Decide if to create a new thread
     current_workers++;
     pthread_mutex_unlock(&num_workers);
-    theard_args n1;                           // args to new thread
-    n1.array = array;                         // pointer to array
-    n1.lo = lo;                               // lower bound
-    n1.hi = p-1;                              // Higher bound
-    pthread_create(&tidl, NULL, co_quicksort, &n1);  // new thread
+    createThread(&tidl, array, lo, p-1);
     l = 1;
   }
   else {
@@ -56,14 +52,10 @@ void quicksort(int array[], int lo, int hi){
   }
 
   pthread_mutex_lock(&num_workers);
-  if(current_workers < max_workers){                       // Decide if to create a new thread
+  if(current_workers < max_workers){          // Decide if to create a new thread
     current_workers++;
     pthread_mutex_unlock(&num_workers);
-    theard_args n1;                           // args to new thread
-    n1.array = array;                         // pointer to array
-    n1.lo = p+1;                               // lower bound
-    n1.hi = hi;                              // Higher bound
-    pthread_create(&tidr, NULL, co_quicksort, &n1);  // new thread
+    createThread(&tidr, array, p+1, hi);
     r = 1;
   }
   else {
@@ -74,6 +66,16 @@ void quicksort(int array[], int lo, int hi){
   if(r)pthread_join(tidr, NULL);
 
 }
+
+void createThread(pthread_t* tid, array[], int lo, int high){
+  theard_args n1;                           // args to new thread
+  n1.array = array;                         // pointer to array
+  n1.lo = lo;                               // lower bound
+  n1.hi = hi;                               // Higher bound
+  pthread_create(tid, NULL, co_quicksort, &n1);  // new thread
+}
+
+
 
 /*
   co_quicksort

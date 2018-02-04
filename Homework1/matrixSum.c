@@ -5,8 +5,8 @@
              and prints the total sum to the standard output
 
    usage under Linux:
-     gcc matrixSum.c -lpthread
-     a.out size numWorkers
+     gcc -o matrixSum matrixSumC.c -lpthread
+     ./matrixSum size numWorkers
 
 */
 #ifndef _REENTRANT

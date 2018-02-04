@@ -1,12 +1,8 @@
 /* matrix summation using pthreads
 
-   features: uses a barrier; the Worker[0] computes
-             the total sum from partial sums computed by Workers
-             and prints the total sum to the standard output
-
    usage under Linux:
-     gcc matrixSum.c -lpthread
-     a.out size numWorkers
+     gcc -o matrixSumC matrixSumC.c -lpthread
+     ./matrixSumC size numWorkers
 
 */
 #ifndef _REENTRANT
@@ -108,7 +104,7 @@ int main(int argc, char *argv[]) {
   /* initialize the matrix */
   for (i = 0; i < size; i++) {
 	  for (j = 0; j < size; j++) {
-      matrix[i][j] = rand()%9999 + 2;
+      matrix[i][j] = rand()%99;
 	  }
   }
 
