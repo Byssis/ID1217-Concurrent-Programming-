@@ -148,6 +148,9 @@ int main(int argc, char *argv[]){
   size = k - 1;
 
   for (i = 1; i <= MAXWORKERS; i = i*2) {
+  pthread_mutex_init(&barrier, NULL);
+  pthread_cond_init(&go, NULL);
+
   //i = numWorkers;
   sum = 0;
   word_index = 0;
