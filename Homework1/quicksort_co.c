@@ -21,6 +21,14 @@ int max_workers;
 // Function delcaretion of co_quicksort
 void * co_quicksort(void * arg);
 
+void createThread(pthread_t* tid, array[], int lo, int high){
+  theard_args n1;                           // args to new thread
+  n1.array = array;                         // pointer to array
+  n1.lo = lo;                               // lower bound
+  n1.hi = hi;                               // Higher bound
+  pthread_create(tid, NULL, co_quicksort, &n1);  // new thread
+}
+
 /*
   quicksort
   This function will sort an array of number with a concurrent implementation
@@ -66,15 +74,6 @@ void quicksort(int array[], int lo, int hi){
   if(r)pthread_join(tidr, NULL);
 
 }
-
-void createThread(pthread_t* tid, array[], int lo, int high){
-  theard_args n1;                           // args to new thread
-  n1.array = array;                         // pointer to array
-  n1.lo = lo;                               // lower bound
-  n1.hi = hi;                               // Higher bound
-  pthread_create(tid, NULL, co_quicksort, &n1);  // new thread
-}
-
 
 
 /*
