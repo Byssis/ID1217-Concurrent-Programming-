@@ -18,8 +18,9 @@ finding palindromic words in a dictionary using pthreads
 
 #define MAXWORKERS 25
 #define WORDLENGTH 40
-#define TASKLENGTH 100
+#define TASKLENGTH 10
 #define MAXSIZE 30000
+
 pthread_mutex_t word_index_lock;
 pthread_mutex_t sum_lock;
 
@@ -69,8 +70,7 @@ int binarySearch(int l, int r, char * x){
 void * Worker(void * args){
   long myid = (long) args;
   int partial_sum = 0;
-
-
+a
   while (true) {
     // 1. Get word from bag
     int i = getIndex();
@@ -90,18 +90,14 @@ void * Worker(void * args){
       // 4. print if
       if(result != -1){        //printf("%s %s\n", word, flip);
         partial_sum++;
-        //printf("%s %s\n", word, flip);
-        //printf("\n");
-
-        // Print to file
+        printf("%s %s\n", word, flip);
       }
-
     }
   }
-  printf("Worker %d found: %d\n", myid, partial_sum);
   pthread_mutex_lock(&sum_lock);
   sum += partial_sum;
   pthread_mutex_unlock(&sum_lock);
+  printf("Worker %d found: %d\n", myid, partial_sum);
 }
 
 int main(int argc, char *argv[]){
@@ -142,6 +138,7 @@ int main(int argc, char *argv[]){
 
     end_time = read_timer();
 
-    printf("Num threads: %d. The execution time is %g sec. Num words: %d\n", i, end_time - start_time, sum);
+    printf("Num threads: %d. The execution time is %g sec. Num words: %d\n"
+            , i, end_time - start_time, sum);
   }
 }

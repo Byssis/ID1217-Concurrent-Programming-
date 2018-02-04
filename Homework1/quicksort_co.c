@@ -119,10 +119,7 @@ int main(int argc, char *argv[]){
     double start_time = read_timer();
     quicksort(array, 0, size-1);
     double end_time = read_timer();
-    if(ifsorted(array, size)){
-      printf("Array sorted\n");
-    }
-    else {
+    if(ifsorted(array, size) == 0){
       printf("Error\n");
     }
     printf("Threads: %d. The execution time is %g sec\n", j, end_time - start_time);
