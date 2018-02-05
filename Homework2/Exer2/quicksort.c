@@ -30,7 +30,7 @@ void quicksort(int array[], int lo, int hi){
 int partition(int array[], int lo, int hi){
   int p;
   if(hi-lo > 2){
-    p = (array[lo] + array[lo+1] array[lo + 2]) / 3;
+    p = (array[lo] + array[lo+1] + array[lo + 2]) / 3;
   }
   else{
     p = array[hi];
