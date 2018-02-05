@@ -21,7 +21,7 @@ void *Worker(void *);
 
 /* read command line, initialize, and create threads */
 int main(int argc, char *argv[]) {
-  int i, j, total=0, maxvalue, minvalue, mini, minj, maxi, maxj;
+  int i, j, total=0, max, min, mini, minj, maxi, maxj;
 
   /* read command line args if any */
   size = (argc > 1)? atoi(argv[1]) : MAXSIZE;
@@ -40,25 +40,25 @@ int main(int argc, char *argv[]) {
 	  }
 	  //	  printf(" ]\n");
   }
-  maxvalue = matrix[0][0];
-  minvalue = matrix[0][0];
+  max = matrix[0][0];
+  min = matrix[0][0];
   mini = 0;
   maxi = 0;
   minj = 0;
   maxj = 0;
   start_time = omp_get_wtime();
-#pragma omp parallel for reduction (+:total) reduction(min:minvalue) reduction(max:maxvalue) private(j)
+#pragma omp parallel for reduction (+:total), reduction(min:min), reduction(max:max) private(j)
   for (i = 0; i < size; i++)
     for (j = 0; j < size; j++){
       int v = matrix[i][j];
       total += v;
-      if(maxvalue < v){
-        maxvalue = v;
+      if(max < v){
+        max = v;
         maxi = i;
         maxj = j;
       }
-      if(minvalue > v){
-        minvalue = v;
+      if(min > v){
+        min = v;
         mini = i;
         minj = j;
       }
