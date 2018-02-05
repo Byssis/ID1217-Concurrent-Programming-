@@ -63,7 +63,7 @@ int main(int argc, char *argv[]){
   int array[size];
   int i;
   for (i = 0; i < size; i++)
-    array[i]= rand() % 99;
+    array[i]= rand() % 99999;
   //printf("%d\n", size);
   double start_time = omp_get_wtime();
   quicksort(array, 0, size-1);
