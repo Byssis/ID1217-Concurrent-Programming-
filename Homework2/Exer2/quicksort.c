@@ -46,6 +46,17 @@ int swap(int array[], int p1, int p2 ){
   array[p1] = temp;
 }
 
+int ifsorted(int * array, int size){
+    int prev = *(array++);
+    int i = 0;
+    for (i = 1; i < size; i++) {
+      if(*array < prev) return 0;
+      array++;
+    }
+    return 1;
+}
+
+
 int main(int argc, char *argv[]){
   int size = (argc > 1)? atoi(argv[1]) : MAXSIZE;
   int numWorkers = (argc > 2)? atoi(argv[2]) : MAXWORKERS;
@@ -60,5 +71,10 @@ int main(int argc, char *argv[]){
   double end_time = omp_get_wtime();
   /*for (i = 0; i < size; i++)
     printf("%d\n", array[i]);*/
+  if(ifsorted(array, size) == 0){
+    printf("Array sorted\n");
+  }else{
+    printf("Array not sorted\n");
+  }
   printf("The execution time is %g sec\n", end_time - start_time);
 }
