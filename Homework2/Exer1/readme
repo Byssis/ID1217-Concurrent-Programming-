@@ -1,0 +1,8 @@
+matrix summation using OpenMP
+
+   usage with gcc (version 4.2 or higher required):
+     gcc -O -fopenmp -o matrixSum-openmp matrixSum-openmp.c
+     ./matrixSum-openmp size numWorkers
+
+    example:
+    ./matrixSum-openmp 10000 4
