@@ -23,21 +23,15 @@ void quicksort(int array[], int lo, int hi){
     #pragma omp section
       quicksort(array, lo, p-1);
     #pragma omp section
-      quicksort(array, p, hi);
+      quicksort(array, p+1, hi);
   }
 }
 
 int partition(int array[], int lo, int hi){
-  int p;
-  if(hi-lo > 2){
-    p = (array[lo] + array[lo+1] + array[lo + 2]) / 3;
-  }
-  else{
-    p = array[hi];
-  }
+  int p = array[hi];
   int i = lo - 1;
   int j;
-  for (j = lo; j <= hi; j++){
+  for (j = lo; j < hi; j++){
     if( array [j] < p )
       swap(array, ++i, j);
   }
