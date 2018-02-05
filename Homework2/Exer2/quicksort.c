@@ -41,6 +41,9 @@ int partition(int array[], int lo, int hi){
     if( array [j] < p )
       swap(array, ++i, j);
   }
+  if(array[hi] < array[i+1])
+    swap(array, i+1, hi);
+
   return i + 1;
 }
 
