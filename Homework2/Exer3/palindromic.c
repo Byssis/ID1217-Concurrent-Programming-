@@ -59,7 +59,7 @@ void Workers(int size){
     char * word = dictionary[i];
     // 2. flip word
     char flip[WORDLENGTH];
-    reverse(word, flip)
+    reverse(word, flip);
     // 3. search for fliped word in dictionary
     int result = binarySearch(0, size, flip);
     // 4. mark if in dictionary
@@ -81,7 +81,7 @@ int main(int argc, char *argv[]){
     exit(0);
   }
   char const* const fileName = argv[1];
-  numWorkers = (argc > 2)? atoi(argv[2]) : MAXWORKERS;
+  int numWorkers = (argc > 2)? atoi(argv[2]) : MAXWORKERS;
   omp_set_num_threads(numWorkers);
 
   // Read dictionary
