@@ -23,7 +23,7 @@ void quicksort(int array[], int lo, int hi){
     #pragma omp section
       quicksort(array, lo, p-1);
     #pragma omp section
-      quicksort(array, p+1, hi);
+      quicksort(array, p, hi);
   }
 }
 
