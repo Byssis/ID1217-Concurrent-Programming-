@@ -104,11 +104,11 @@ int main(int argc, char *argv[]){
   FILE* resultfile = fopen("Result.txt", "w");
   for(i = 0; i < size; i++){
     if(mark[i]){
-      fprintf(resultfile, "%s", dictionary[i]);
+      fprintf(resultfile, "%s\n", dictionary[i]);
     }
   }
   // Print execution time
   printf("Num threads: %d. The execution time is %g sec. Num words: %d\n"
-          , i, end_time - start_time, sum);
+          , numWorkers, end_time - start_time, sum);
 
 }
