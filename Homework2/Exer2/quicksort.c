@@ -56,7 +56,6 @@ int ifsorted(int * array, int size){
     return 1;
 }
 
-
 int main(int argc, char *argv[]){
   int size = (argc > 1)? atoi(argv[1]) : MAXSIZE;
   int numWorkers = (argc > 2)? atoi(argv[2]) : MAXWORKERS;
@@ -71,9 +70,11 @@ int main(int argc, char *argv[]){
   double end_time = omp_get_wtime();
   /*for (i = 0; i < size; i++)
     printf("%d\n", array[i]);*/
-  if(ifsorted(array, size) == 0){
+  if(ifsorted(array, size) == 1){
     printf("Array sorted\n");
   }else{
+    for (i = 0; i < size; i++)
+      printf("%d\n", array[i]);
     printf("Array not sorted\n");
   }
   printf("The execution time is %g sec\n", end_time - start_time);
