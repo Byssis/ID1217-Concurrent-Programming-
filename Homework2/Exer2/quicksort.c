@@ -37,7 +37,6 @@ int partition(int array[], int lo, int hi){
   }
   if(array[hi] < array[i+1])
     swap(array, i+1, hi);
-
   return i + 1;
 }
 
@@ -59,7 +58,7 @@ int main(int argc, char *argv[]){
   double start_time = omp_get_wtime();
   quicksort(array, 0, size-1);
   double end_time = omp_get_wtime();
-  for (i = 0; i < size; i++)
-    printf("%d\n", array[i]);
+  /*for (i = 0; i < size; i++)
+    printf("%d\n", array[i]);*/
   printf("The execution time is %g sec\n", end_time - start_time);
 }
