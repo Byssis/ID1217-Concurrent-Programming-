@@ -18,7 +18,7 @@ void quicksort(int array[], int lo, int hi){
   if(lo >= hi) return;
   int p = partition(array, lo, hi);
 
-  #pragma omp parallel sections |
+  #pragma omp parallel sections
   {
     #pragma omp section
       quicksort(array, lo, p-1);
