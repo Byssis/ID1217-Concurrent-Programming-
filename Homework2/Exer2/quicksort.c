@@ -28,15 +28,19 @@ void quicksort(int array[], int lo, int hi){
 }
 
 int partition(int array[], int lo, int hi){
-  int p = array[hi];
+  int p;
+  if(hi-lo > 2){
+    p = (array[lo] + array[lo+1] array[lo + 2]) / 3;
+  }
+  else{
+    p = array[hi];
+  }
   int i = lo - 1;
   int j;
-  for (j = lo; j < hi; j++){
+  for (j = lo; j <= hi; j++){
     if( array [j] < p )
       swap(array, ++i, j);
   }
-  if(array[hi] < array[i+1])
-    swap(array, i+1, hi);
   return i + 1;
 }
 
@@ -58,6 +62,7 @@ int main(int argc, char *argv[]){
   double start_time = omp_get_wtime();
   quicksort(array, 0, size-1);
   double end_time = omp_get_wtime();
-
+  for (i = 0; i < size; i++)
+    printf("%d\n", array[i]);
   printf("The execution time is %g sec\n", end_time - start_time);
 }
