@@ -47,7 +47,11 @@ int main(int argc, char *argv[]) {
   minj = 0;
   maxj = 0;
   start_time = omp_get_wtime();
-#pragma omp parallel for reduction (+:total), reduction(min:min), reduction(max:max) private(j)
+#pragma omp parallel for      \
+        reduction (+:total)   \
+        reduction (min:min)   \
+        reduction (max:max)   \
+        private(j)
   for (i = 0; i < size; i++)
     for (j = 0; j < size; j++){
       int v = matrix[i][j];
