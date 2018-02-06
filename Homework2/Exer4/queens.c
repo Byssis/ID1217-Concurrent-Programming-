@@ -24,10 +24,10 @@ int main(int argc, char *argv[]){
   int i, iteration, size, numWorkers, possibilities = 1, nummerOfSolutions = 0;
   double startTime, endTime;
 
-  size = (argc > 1): atoi(argv[1]) ? 8;
-  size = (size <= MAXSIZE) : size ? MAXSIZE;
-  numWorkers = (argc > 2): atoi(argv[2]) ? ;
-  numWorkers = (numWorkers <= MAXWORKERS) : numWorkers ? MAXWORKERS;
+  size = (argc > 1) ? atoi(argv[1]) : 8;
+  size = (size <= MAXSIZE) ?  size : MAXSIZE;
+  numWorkers = (argc > 2) ? atoi(argv[2]) : 4 ;
+  numWorkers = (numWorkers <= MAXWORKERS) ? numWorkers : MAXWORKERS;
 
   omp_set_num_threads(numWorkers);
 
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
     possibilities *= size;
   }
   startTime = omp_get_wtime();
-  for(iteration = 0; iteration < possibilities, iteration++){
+  for(iteration = 0; iteration < possibilities; iteration++){
     int j;
     int rows[size];
     int place = iteration;
@@ -61,6 +61,6 @@ int main(int argc, char *argv[]){
   endTime = omp_get_wtime();
 
   printf("Num threads: %d. The execution time is %g sec. Num solutions: %d\n"
-          , numWorkers, end_time - start_time, nummerOfSolutions);
+          , numWorkers, endTime - startTime, nummerOfSolutions);
 
 }
