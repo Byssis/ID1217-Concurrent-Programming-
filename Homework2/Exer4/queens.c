@@ -42,10 +42,10 @@ int main(int argc, char *argv[]){
     for(j = 0; j < size; j++){
       rows[j] = place % size;
       place /= size;
-      printf("%d\n", place);
+      //printf("%d\n", place);
     }
 
-    if(isSolution(rows, size)){
+    if(isSolution(rows, size) == 1){
       nummerOfSolutions++;
       int row, col;
       for ( row = 0; row < size; row++) {
