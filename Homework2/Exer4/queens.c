@@ -36,7 +36,6 @@ int main(int argc, char *argv[]){
   }
   startTime = omp_get_wtime();
 #pragma omp parallel for
-{
   for(iteration = 0; iteration < possibilities; iteration++){
     int j;
     int rows[size];
@@ -48,7 +47,7 @@ int main(int argc, char *argv[]){
     }
 
     if(isSolution(rows, size) == 1){
-  #pragma omp critical 
+  #pragma omp critical
   {
       nummerOfSolutions++;
       int row, col;
@@ -63,7 +62,6 @@ int main(int argc, char *argv[]){
     }
   }
   }
-}
   endTime = omp_get_wtime();
 
   printf("Num threads: %d. The execution time is %g sec. Num solutions: %d\n"
