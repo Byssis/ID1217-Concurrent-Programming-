@@ -58,8 +58,8 @@ int main(int argc, char *argv[]){
         }
         printf("|\n");
       }
-      printf("\n");
-    }*/
+      printf("\n");*/
+    }
   }
   }
   endTime = omp_get_wtime();
