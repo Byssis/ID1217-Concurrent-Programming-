@@ -39,9 +39,9 @@ int main(int argc, char *argv[]){
     int j;
     int rows[size];
     int place = iteration;
-    for(j = 0; j < n; j++){
-      rows[j] = place % n;
-      place /= n;
+    for(j = 0; j < size; j++){
+      rows[j] = place % size;
+      place /= size;
       printf("%d\n", place);
     }
 
