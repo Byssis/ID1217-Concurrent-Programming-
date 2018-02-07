@@ -50,7 +50,7 @@ int main(int argc, char *argv[]){
   #pragma omp critical
   {
       nummerOfSolutions++;
-      /*int row, col;
+      int row, col;
       for ( row = 0; row < size; row++) {
         for ( col = 0; col < size; col++){
           if(rows[row] == col)  printf("| Q ");
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]){
         }
         printf("|\n");
       }
-      printf("\n");*/
+      printf("\n");
     }
   }
   }
