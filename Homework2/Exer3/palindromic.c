@@ -62,12 +62,11 @@ void Workers(int size){
     char flip[WORDLENGTH];
     reverse(word, flip);
     // 3. search for fliped word in dictionary
-    int result = binarySearch(0, size, flip);
+    int result = binarySearch(i, size -1, flip);
     // 4. mark if in dictionary
     if(result != -1){
       sum++;
       mark[i] = 1;
-      //mark[result] = 1;
     }
   }
 }
