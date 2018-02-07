@@ -62,7 +62,7 @@ void Workers(int size){
     char flip[WORDLENGTH];
     reverse(word, flip);
     // 3. search for fliped word in dictionary
-    int result = binarySearch(i, size -1, flip);
+    int result = binarySearch(i, size, flip);
     // 4. mark if in dictionary
     if(result != -1){
       sum++;
@@ -96,20 +96,8 @@ int main(int argc, char *argv[]){
   fclose(file);
   size = k - 1;
 
-  start_time = omp_get_wtime();                  // Start time for benchmark
-  Workers(size);
-  end_time = omp_get_wtime();                    // End time for benchmark
+  int result = binarySearch(0, size, "wow");
 
-  FILE* resultfile = fopen("Result.txt", "w");
-  for(i = 0; i < size; i++){
-    if(mark[i]){
-      fprintf(resultfile, "%s\n", dictionary[i]);
-    }
-  }
-  printf("Result stored in Result.txt\n");
-
-  // Print execution time
-  printf("Num threads: %d. The execution time is %g sec. Num words: %d\n"
-          , numWorkers, end_time - start_time, sum);
+  printf("%d\n", result);
 
 }
