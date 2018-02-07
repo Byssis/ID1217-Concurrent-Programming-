@@ -74,7 +74,7 @@ void Workers(int size){
 
 int main(int argc, char *argv[]){
   double start_time, end_time;
-  int k = 0, i;
+  int k = 0, i, numWorkers;
   long l;
 
   if(argc < 3){
@@ -82,7 +82,7 @@ int main(int argc, char *argv[]){
     exit(0);
   }
   char const* const fileName = argv[1];
-  int numWorkers = (argc > 2)? atoi(argv[2]) : MAXWORKERS;
+  numWorkers = (argc > 2)? atoi(argv[2]) : MAXWORKERS;
   omp_set_num_threads(numWorkers);
 
   // Read dictionary
@@ -107,6 +107,8 @@ int main(int argc, char *argv[]){
       fprintf(resultfile, "%s\n", dictionary[i]);
     }
   }
+  printf("Result stored in Result.txt\n");
+
   // Print execution time
   printf("Num threads: %d. The execution time is %g sec. Num words: %d\n"
           , numWorkers, end_time - start_time, sum);
