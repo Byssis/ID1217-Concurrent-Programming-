@@ -1,0 +1,21 @@
+Find common values in T different array. Each array is represented
+by a process. Solution implements a circular pipeline. Process 0 (root process) start by sending one value at time
+to process 1. Process 1 checks if received value is also in process 1 array.
+If true it will send the received to the next process.
+
+When process 0 is done sending all values it signals that all values are
+sent to process 1 and process 1 will signal process 2 and so on.
+
+If process 0 receives any value, it means it is a common value for all
+arrays. It will then send it to the next process.
+
+Process 0 will send to 1 and receive from T-1
+Process T-1 will send to 0 and receive from T-2
+Process I will send to I+1 and receive from I-1
+
+
+Compile:
+  mpicc thewelfarecrook.c -o thewelfarecrook
+
+Run:
+  mpirun -np 3 ./thewelfarecrook
