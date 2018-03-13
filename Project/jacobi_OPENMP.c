@@ -16,6 +16,7 @@ int main(int argc, char const *argv[]) {
   gridSize = (argc > 1) ? atoi(argv[1]) : GRIDSIZE;
   numIters = (argc > 2) ? atoi(argv[2]) : NUMITERS;
   workers = (argc > 3) ? atoi(argv[3]) : WORKERS;
+
   workload = gridSize/workers;
   double ** grid = (double**)malloc(gridSize*sizeof(double));
   double ** new =  (double **)malloc(gridSize*sizeof(double));
@@ -39,10 +40,10 @@ int main(int argc, char const *argv[]) {
 
 
   double start_time =  omp_get_wtime();
-#pragma omp parallel
-{
+
+
   for(iter = 0; iter < numIters; iter++){
-#pragma omp for private(j) schedule(static, workload)
+#pragma omp parallel for private(j) //schedule(static, workload)
     for (i = 1; i < gridSize - 1; i++) {
       for (j = 1; j < gridSize - 1; j++) {
         new[i][j] = (grid[i-1][j] + grid[i+1][j]+ grid[i][j-1]+ grid[i][j+1])*0.25;
@@ -53,7 +54,7 @@ int main(int argc, char const *argv[]) {
     grid = new;
     new = tmp;
   }
-}
+
   double end_time =  omp_get_wtime();
   printf("The execution time is %g sec\n", end_time - start_time);
   FILE *f = fopen("filedata_openmp.out", "w");
