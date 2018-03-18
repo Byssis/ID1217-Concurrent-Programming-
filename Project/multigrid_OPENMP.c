@@ -12,6 +12,9 @@
 #define ITERATIONSPERLEVEL 4
 #define WORKERS 4
 
+double ** grid;
+double ** new;
+
 void printgrid(double ** grid, int size, int step){
   int i, j;
   for (i = 0; i < size; i+=step)
@@ -23,9 +26,6 @@ void printgrid(double ** grid, int size, int step){
 // Jacobi iterations
 void jacobi(double ** grid, double ** new, int numIters, int size, int step){
   int iter, i, j;
-  /*int workload = size / step;
-  if(workload % omp_get_thread_num() == 0) workload = workload / omp_get_thread_num() + 1;
-  else workload = workload / omp_get_thread_num();*/
 
   for(iter = 0; iter < numIters; iter++){
     for (i = step; i < size - step; i += step)
@@ -38,28 +38,24 @@ void jacobi(double ** grid, double ** new, int numIters, int size, int step){
 
 // Jacobi iterations
 void jacobi_para(double ** grid, double ** new, int numIters, int size, int step){
-#pragma omp parallel
-{
-    int iter, i, j;
-  for(iter = 0; iter < numIters; iter++){
-#pragma omp for private(j) //schedule(static, workload)
-    for (i = step; i < size - step; i += step)
-      for (j = step; j < size - step; j += step )
-        new[i][j] = (grid[i-step][j] + grid[i+step][j]+ grid[i][j-step]+ grid[i][j+step])*0.25;
-    // Swap grid and new
 
+  int iter, i, j;
+  for(iter = 0; iter < numIters; iter++){
+#pragma omp parallel for private(j) schedule(static)
+    for (i = step; i < size - step; i += step){
+      for (j = step; j < size - step; j += step ){
+        new[i][j] = (grid[i-step][j] + grid[i+step][j]+ grid[i][j-step]+ grid[i][j+step])*0.25;
+      }
+    }
     double ** tmp = grid;
     grid = new;
     new = tmp;
-
   }
-}
 }
 
 int main(int argc, char const *argv[]) {
   int  gridSize, numIters, i, j, iter, v, workers;
 
-  //double ** tmp;
   gridSize = (argc > 1) ? atoi(argv[1]) : GRIDSIZE;
   numIters = (argc > 2) ? atoi(argv[2]) : NUMITERS;
   workers = (argc > 3) ? atoi(argv[3]) : WORKERS;
@@ -91,19 +87,18 @@ int main(int argc, char const *argv[]) {
   // Start time
   double start_time = omp_get_wtime();
 
+  // Go down in V
   for (v = VCYCLE-1; v > 0 ; v--) {
-
     int step = 1 << VCYCLE-1 - v;
     // Calulate jacobi
-    jacobi(grid, new, ITERATIONSPERLEVEL, gridSize, step);
+    jacobi_para(grid, new, ITERATIONSPERLEVEL, gridSize, step);
 
     // Update next level coarse grid
     int next_step = step << 1;
-//#pragma omp parallel for private(j)
+#pragma omp parallel for private(j) schedule(static)
     for (i = next_step; i < gridSize - next_step; i += next_step)
       for (j = next_step; j < gridSize - next_step; j += next_step )
-        new[i][j] = grid[i][j] + (grid[i-step][j] + grid[i+step][j]+ grid[i][j-step]+ grid[i][j+step])*0.125;
-
+        new[i][j] = grid[i][j]*0.5 + (grid[i-step][j] + grid[i+step][j]+ grid[i][j-step]+ grid[i][j+step])*0.125;
 
     double ** tmp = grid; grid = new; new = tmp;
   }
@@ -119,24 +114,23 @@ int main(int argc, char const *argv[]) {
 
     // Get fine grid from coarse grid
     // Fix colums
-//#pragma omp parallel for private(j)
+#pragma omp parallel for private(j) schedule(static)
     for (i = 2*step; i < gridSize; i += 2*step)
       for (j = 2*step; j < gridSize; j += 2*step)
         new[i-step][j] = (grid[i-2*step][j] + grid[i][j])*0.5;
 
     // Fix resut of fine garins
-//#pragma omp parallel for private(j)
+#pragma omp parallel for private(j) schedule(static)
     for (i = 2*step; i < gridSize; i += 2*step)
       for (j = 2*step; j < gridSize; j += 2*step )
         new[i-step][j-step] = (grid[i-step][j-2*step] + grid[i-step][j])*0.5;
     // Swap grid and new
-
     double ** tmp = grid; grid = new; new = tmp;
     // Calculate Jacobi iterations
-    jacobi(grid, new, ITERATIONSPERLEVEL, gridSize, step);
+    jacobi_para(grid, new, ITERATIONSPERLEVEL, gridSize, step);
   }
-
   double end_time = omp_get_wtime();
+
   double max = 0.0;
   for (i = 1; i < gridSize - 1; i++) {
     for (j = 1; j < gridSize - 1; j++) {
