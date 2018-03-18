@@ -59,7 +59,7 @@ int main(int argc, char const *argv[]) {
   double end_time =  omp_get_wtime();
 
   double max = 0.0;
-#pragma omp parallel for private(j) schedule(static, workload) reduction(max:max)
+//#pragma omp parallel for private(j) schedule(static, workload) reduction(max:max)
   for (i = 1; i < gridSize - 1; i++) {
     for (j = 1; j < gridSize - 1; j++) {
       double diff = (grid[i][j] - new[i][j]);
