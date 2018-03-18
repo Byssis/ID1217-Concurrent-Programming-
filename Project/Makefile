@@ -1,6 +1,9 @@
 all:
 	gcc -o jacobi.out jacobi.c
 	gcc -O -fopenmp -o jacobi_OPENMP.out jacobi_OPENMP.c
+	gcc -o multigrid.out multigrid.c
+	gcc -O -fopenmp -o multigrid_OPENMP.out multigrid_OPENMP.c
+	gcc -o multigrid_pthreads.out multigrid_pthreads.c -lpthread
 
 test1:
 	./jacobi.out 100 100000

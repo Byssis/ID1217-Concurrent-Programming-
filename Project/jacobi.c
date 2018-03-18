@@ -48,18 +48,28 @@ int main(int argc, char const *argv[]) {
   }
   double start_time = read_timer();
   for(iter = 0; iter < numIters; iter++){
-    for (i = 1; i < gridSize - 1; i++) {
-      for (j = 1; j < gridSize - 1; j++) {
+    for (i = 1; i < gridSize - 1; i++)
+      for (j = 1; j < gridSize - 1; j++)
         new[i][j] = (grid[i-1][j] + grid[i+1][j]+ grid[i][j-1]+ grid[i][j+1])*0.25;
-      }
-    }
     double ** tmp = grid;
     grid = new;
     new = tmp;
 
   }
   double end_time = read_timer();
-  printf("The execution time is %g sec\n", end_time - start_time);
+  double max = 0.0;
+  for (i = 1; i < gridSize - 1; i++) {
+    for (j = 1; j < gridSize - 1; j++) {
+      double diff = (grid[i][j] - new[i][j]);
+      printf("%f\n", diff);
+      if(diff < 0)
+        diff = -1*diff;
+      if(diff > max){
+        max = diff;
+      }
+    }
+  }
+  printf("The execution time is %g sec, max diff %f\n", end_time - start_time, max);
   FILE *f = fopen("filedata.out", "w");
   for (i = 0; i < gridSize; i++) {
     for (j = 0; j < gridSize; j++) {
